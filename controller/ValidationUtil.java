@@ -7,9 +7,8 @@ import java.util.regex.Pattern;
  * @author Viom Shrestha
  */
 public class ValidationUtil {
-    private static final Pattern OBJECT_ID_PATTERN = Pattern.compile("^\\d{3}$");
+    private static final Pattern ARTIFACT_ID_PATTERN = Pattern.compile("^\\d{3}$");
     private static final Pattern NAME_PATTERN = Pattern.compile("^[a-zA-Z\\s]+$");
-    private static final Pattern OBJECT_TYPE_PATTERN = Pattern.compile("^(Painting|Sculpture|Artifact|Other)$");
     private static final Pattern STATUS_PATTERN = Pattern.compile("^(Permanent|Temporary)$");
     private static final Pattern CONDITION_PATTERN = Pattern.compile("^(Excellent||Good|Bad|Needs Restoration|Damaged)$");
     
@@ -24,7 +23,7 @@ public class ValidationUtil {
     }
 
     /**
-     * Validates if string fields like object name, creator and origin contains only alphabets.
+     * Validates if string fields like Artifact name, creator and origin contains only alphabets.
      *
      * @param name the name to validate
      * @return true if valid, otherwise false
@@ -34,23 +33,13 @@ public class ValidationUtil {
     }
 
     /**
-     * Validates if the object ID is exactly 3 digits.
+     * Validates if the Artifact ID is exactly 3 digits.
      *
      * @param objectId the Object ID to validate
      * @return true if valid, otherwise false
      */
     public static boolean isValidObjectId(int objectId) {
-        return OBJECT_ID_PATTERN.matcher(String.valueOf(objectId)).matches();
-    }
-
-    /**
-     * Validates if the object type is one of the allowed options.
-     *
-     * @param objectType the object type to validate
-     * @return true if valid, otherwise false
-     */
-    public static boolean isValidObjectType(String objectType) {
-        return !isNullOrEmpty(objectType) && OBJECT_TYPE_PATTERN.matcher(objectType).matches();
+        return ARTIFACT_ID_PATTERN.matcher(String.valueOf(objectId)).matches();
     }
     
     /**
@@ -63,15 +52,6 @@ public class ValidationUtil {
         return !isNullOrEmpty(status) && STATUS_PATTERN.matcher(status).matches();
     }
     
-    /**
-     * Validates if the condition is of the allowed options.
-     *
-     * @param condition the object's condition to validate
-     * @return true if valid, otherwise false
-     */
-    public static boolean isValidCondition(String condition) {
-        return !isNullOrEmpty(condition) && CONDITION_PATTERN.matcher(condition).matches();
-    }
 
     /**
      * Validates if the floor number is between 1 and 5 (inclusive).

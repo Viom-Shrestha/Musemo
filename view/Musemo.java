@@ -1,7 +1,7 @@
 package com.musemo.view;
 
 import com.musemo.controller.ValidationUtil;
-import com.musemo.model.ObjectModel;
+import com.musemo.model.ArtifactModel;
 import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Musemo extends javax.swing.JFrame {
 
-    private List<ObjectModel> objectList;
+    private List<ArtifactModel> artifactList;
     private java.awt.CardLayout cardLayout;
     private final ValidationUtil validationUtil;
     private final Color errorColor = new Color(255, 51, 0);
@@ -30,6 +30,7 @@ public class Musemo extends javax.swing.JFrame {
         initializeLayout(); // Sets up CardLayout and pages
         initializaData(); // Initialize Objct data and Object table
         startProgress(); // Simulates the loading bar
+        setResizable(false);
     }
 
     /**
@@ -44,10 +45,11 @@ public class Musemo extends javax.swing.JFrame {
         pnlHomeScreen = new javax.swing.JPanel();
         lblHomePageHeader = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
+        scrlPaneHome = new javax.swing.JScrollPane();
         pnlHome = new javax.swing.JPanel();
-        lblHomePageWelcome = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         btnAdminLogin = new javax.swing.JButton();
+        btnBookNowPH = new javax.swing.JButton();
+        lblHomePageWelcome1 = new javax.swing.JLabel();
         pnlAboutPage = new javax.swing.JPanel();
         lblFounderMessage = new javax.swing.JLabel();
         lblAboutUsTitle = new javax.swing.JLabel();
@@ -66,34 +68,36 @@ public class Musemo extends javax.swing.JFrame {
         lblDashboardTitle = new javax.swing.JLabel();
         lblDashboard = new javax.swing.JLabel();
         btnManageObjects = new javax.swing.JButton();
-        pnlManageObjects = new javax.swing.JPanel();
+        btnLogout = new javax.swing.JButton();
+        pnlManageArtifacts = new javax.swing.JPanel();
         lblManageBojectsHeader = new javax.swing.JLabel();
         spTblObjects = new javax.swing.JScrollPane();
-        tblObject = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
+        tblArtifact = new javax.swing.JTable();
+        lblTabletitle = new javax.swing.JLabel();
         pnlForm = new javax.swing.JPanel();
-        txtFldObjectId = new javax.swing.JTextField();
-        txtFldCondition = new javax.swing.JTextField();
-        txtFldObjectName = new javax.swing.JTextField();
-        txtFldObjectType = new javax.swing.JTextField();
+        txtFldArtifactId = new javax.swing.JTextField();
+        txtFldArtifactName = new javax.swing.JTextField();
+        cmbBoxArtifactType = new javax.swing.JComboBox<>();
         txtFldCreator = new javax.swing.JTextField();
         txtFldStatus = new javax.swing.JTextField();
         txtFldOrigin = new javax.swing.JTextField();
         txtFldRoom = new javax.swing.JTextField();
         txtFldFloor = new javax.swing.JTextField();
-        btnAddObject = new javax.swing.JButton();
+        btnAddArtifact = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
-        lblErrorMsgObjectName = new javax.swing.JLabel();
-        lblErrorMsgObjectId = new javax.swing.JLabel();
-        lblErrorMsgObjectType = new javax.swing.JLabel();
+        lblErrorMsgArtifactName = new javax.swing.JLabel();
+        lblErrorMsgArtifactId = new javax.swing.JLabel();
+        lblErrorMsgArtifactType = new javax.swing.JLabel();
         lblErrorMsgCreator = new javax.swing.JLabel();
         lblErrorMsgStatus = new javax.swing.JLabel();
         lblErrorMsgOrigin = new javax.swing.JLabel();
         lblErrorMsgCondition = new javax.swing.JLabel();
         lblErrorMsgFloor = new javax.swing.JLabel();
         lblErrorMsgRoomNo = new javax.swing.JLabel();
+        cmbBoxCondition = new javax.swing.JComboBox<>();
+        btnBackToHome1 = new javax.swing.JButton();
         pnlLoadingScreen = new javax.swing.JPanel();
         lblloading = new javax.swing.JLabel();
         prgBarLoadingScreen = new javax.swing.JProgressBar();
@@ -112,55 +116,38 @@ public class Musemo extends javax.swing.JFrame {
         jTabbedPane1.setMinimumSize(new java.awt.Dimension(1300, 500));
         jTabbedPane1.setPreferredSize(new java.awt.Dimension(1300, 500));
 
-        pnlHome.setBackground(new java.awt.Color(1, 0, 59));
-        pnlHome.setPreferredSize(new java.awt.Dimension(1300, 700));
+        scrlPaneHome.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        lblHomePageWelcome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/musemo/resources/HomePage.png"))); // NOI18N
+        pnlHome.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/musemo/resources/HomePageFooter.png"))); // NOI18N
-        jLabel1.setMaximumSize(new java.awt.Dimension(1300, 197));
-        jLabel1.setMinimumSize(new java.awt.Dimension(1300, 197));
-        jLabel1.setPreferredSize(new java.awt.Dimension(1300, 197));
-
-        btnAdminLogin.setBackground(new java.awt.Color(102, 102, 255));
-        btnAdminLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnAdminLogin.setBackground(new java.awt.Color(153, 153, 255));
+        btnAdminLogin.setFont(new java.awt.Font("Poor Richard", 1, 18)); // NOI18N
+        btnAdminLogin.setForeground(new java.awt.Color(0, 0, 0));
         btnAdminLogin.setText("Admin");
         btnAdminLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdminLoginActionPerformed(evt);
             }
         });
+        pnlHome.add(btnAdminLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        javax.swing.GroupLayout pnlHomeLayout = new javax.swing.GroupLayout(pnlHome);
-        pnlHome.setLayout(pnlHomeLayout);
-        pnlHomeLayout.setHorizontalGroup(
-            pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlHomeLayout.createSequentialGroup()
-                .addComponent(lblHomePageWelcome)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(pnlHomeLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAdminLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
-        );
-        pnlHomeLayout.setVerticalGroup(
-            pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHomeLayout.createSequentialGroup()
-                .addComponent(lblHomePageWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlHomeLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(11, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHomeLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAdminLogin)
-                        .addGap(39, 39, 39))))
-        );
+        btnBookNowPH.setBackground(new java.awt.Color(153, 153, 255));
+        btnBookNowPH.setFont(new java.awt.Font("Poor Richard", 1, 18)); // NOI18N
+        btnBookNowPH.setForeground(new java.awt.Color(0, 0, 0));
+        btnBookNowPH.setText("Book Now");
+        btnBookNowPH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBookNowPHActionPerformed(evt);
+            }
+        });
+        pnlHome.add(btnBookNowPH, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 630, 110, 40));
 
-        jTabbedPane1.addTab("Home", pnlHome);
+        lblHomePageWelcome1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/musemo/resources/HomePageImg.png"))); // NOI18N
+        pnlHome.add(lblHomePageWelcome1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        scrlPaneHome.setViewportView(pnlHome);
+
+        jTabbedPane1.addTab("Home", scrlPaneHome);
 
         pnlAboutPage.setBackground(new java.awt.Color(9, 1, 59));
         pnlAboutPage.setPreferredSize(new java.awt.Dimension(1300, 700));
@@ -210,7 +197,7 @@ public class Musemo extends javax.swing.JFrame {
                 .addComponent(lblAboutUsTitle)
                 .addGap(18, 18, 18)
                 .addComponent(lblAboutUsSlogan)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 270, Short.MAX_VALUE)
                 .addComponent(lblFounderHeader)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblFounderMessage)
@@ -231,7 +218,7 @@ public class Musemo extends javax.swing.JFrame {
             .addGroup(pnlHomeScreenLayout.createSequentialGroup()
                 .addComponent(lblHomePageHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 544, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE))
         );
 
         pnlAdminLoginScreen.setBackground(new java.awt.Color(1, 0, 59));
@@ -256,6 +243,7 @@ public class Musemo extends javax.swing.JFrame {
 
         txtFldAdminLogin.setBackground(new java.awt.Color(1, 0, 59));
         txtFldAdminLogin.setForeground(new java.awt.Color(153, 153, 255));
+        txtFldAdminLogin.setText("v");
         txtFldAdminLogin.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255), 2), "Username", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(153, 153, 255))); // NOI18N
         txtFldAdminLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -265,6 +253,7 @@ public class Musemo extends javax.swing.JFrame {
 
         pwdFldAdminLogin.setBackground(new java.awt.Color(1, 0, 59));
         pwdFldAdminLogin.setForeground(new java.awt.Color(234, 192, 32));
+        pwdFldAdminLogin.setText("v");
         pwdFldAdminLogin.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 255), 2), "Password", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12), new java.awt.Color(153, 153, 255))); // NOI18N
         pwdFldAdminLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -356,18 +345,30 @@ public class Musemo extends javax.swing.JFrame {
             }
         });
 
+        btnLogout.setBackground(new java.awt.Color(255, 255, 255));
+        btnLogout.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnLogout.setForeground(new java.awt.Color(0, 0, 0));
+        btnLogout.setText("Logout");
+        btnLogout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogoutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlAdminDashboardScreenLayout = new javax.swing.GroupLayout(pnlAdminDashboardScreen);
         pnlAdminDashboardScreen.setLayout(pnlAdminDashboardScreenLayout);
         pnlAdminDashboardScreenLayout.setHorizontalGroup(
             pnlAdminDashboardScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblHomePageHeader1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlAdminDashboardScreenLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(48, 48, 48)
                 .addComponent(lblDashboardTitle)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnManageObjects)
                 .addGap(47, 47, 47))
-            .addGroup(pnlAdminDashboardScreenLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAdminDashboardScreenLayout.createSequentialGroup()
                 .addComponent(lblDashboard)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -375,30 +376,35 @@ public class Musemo extends javax.swing.JFrame {
             pnlAdminDashboardScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAdminDashboardScreenLayout.createSequentialGroup()
                 .addComponent(lblHomePageHeader1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addGroup(pnlAdminDashboardScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblDashboardTitle)
-                    .addComponent(btnManageObjects))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblDashboard)
-                .addGap(18, 18, 18))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addGroup(pnlAdminDashboardScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAdminDashboardScreenLayout.createSequentialGroup()
+                        .addGroup(pnlAdminDashboardScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnManageObjects)
+                            .addComponent(btnLogout))
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAdminDashboardScreenLayout.createSequentialGroup()
+                        .addComponent(lblDashboardTitle)
+                        .addGap(9, 9, 9)))
+                .addComponent(lblDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
 
-        pnlManageObjects.setBackground(new java.awt.Color(1, 0, 59));
-        pnlManageObjects.setMaximumSize(new java.awt.Dimension(1300, 700));
-        pnlManageObjects.setMinimumSize(new java.awt.Dimension(1300, 700));
-        pnlManageObjects.setPreferredSize(new java.awt.Dimension(1300, 700));
+        pnlManageArtifacts.setBackground(new java.awt.Color(1, 0, 59));
+        pnlManageArtifacts.setMaximumSize(new java.awt.Dimension(1300, 700));
+        pnlManageArtifacts.setMinimumSize(new java.awt.Dimension(1300, 700));
+        pnlManageArtifacts.setPreferredSize(new java.awt.Dimension(1300, 700));
 
         lblManageBojectsHeader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/musemo/resources/AllPageHeader.png"))); // NOI18N
 
-        tblObject.setBackground(new java.awt.Color(153, 153, 255));
-        tblObject.setForeground(new java.awt.Color(0, 0, 0));
-        tblObject.setModel(new javax.swing.table.DefaultTableModel(
+        tblArtifact.setBackground(new java.awt.Color(153, 153, 255));
+        tblArtifact.setForeground(new java.awt.Color(0, 0, 0));
+        tblArtifact.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Object ID", "Object Name", "Object Type", "Creator", "Status", "Origin", "Condition", "Floor", "Room"
+                "Artifact ID", "Artifact Name", "Artifact Type", "Creator", "Status", "Origin", "Condition", "Floor", "Room"
             }
         ) {
             Class[] types = new Class [] {
@@ -416,74 +422,68 @@ public class Musemo extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblObject.setGridColor(new java.awt.Color(0, 0, 0));
-        tblObject.setSelectionBackground(new java.awt.Color(102, 102, 255));
-        tblObject.setSelectionForeground(new java.awt.Color(51, 255, 0));
-        tblObject.setShowGrid(true);
-        tblObject.setShowHorizontalLines(true);
-        tblObject.setShowVerticalLines(true);
-        tblObject.getTableHeader().setReorderingAllowed(false);
-        spTblObjects.setViewportView(tblObject);
-        if (tblObject.getColumnModel().getColumnCount() > 0) {
-            tblObject.getColumnModel().getColumn(0).setResizable(false);
-            tblObject.getColumnModel().getColumn(1).setResizable(false);
-            tblObject.getColumnModel().getColumn(2).setResizable(false);
-            tblObject.getColumnModel().getColumn(3).setResizable(false);
-            tblObject.getColumnModel().getColumn(4).setResizable(false);
-            tblObject.getColumnModel().getColumn(5).setResizable(false);
-            tblObject.getColumnModel().getColumn(6).setResizable(false);
-            tblObject.getColumnModel().getColumn(7).setResizable(false);
-            tblObject.getColumnModel().getColumn(8).setResizable(false);
+        tblArtifact.setGridColor(new java.awt.Color(0, 0, 0));
+        tblArtifact.setSelectionBackground(new java.awt.Color(102, 102, 255));
+        tblArtifact.setSelectionForeground(new java.awt.Color(51, 255, 0));
+        tblArtifact.setShowGrid(true);
+        tblArtifact.getTableHeader().setReorderingAllowed(false);
+        spTblObjects.setViewportView(tblArtifact);
+        if (tblArtifact.getColumnModel().getColumnCount() > 0) {
+            tblArtifact.getColumnModel().getColumn(0).setResizable(false);
+            tblArtifact.getColumnModel().getColumn(1).setResizable(false);
+            tblArtifact.getColumnModel().getColumn(2).setResizable(false);
+            tblArtifact.getColumnModel().getColumn(3).setResizable(false);
+            tblArtifact.getColumnModel().getColumn(4).setResizable(false);
+            tblArtifact.getColumnModel().getColumn(5).setResizable(false);
+            tblArtifact.getColumnModel().getColumn(6).setResizable(false);
+            tblArtifact.getColumnModel().getColumn(7).setResizable(false);
+            tblArtifact.getColumnModel().getColumn(8).setResizable(false);
         }
-        tblObject.getAccessibleContext().setAccessibleParent(tblObject);
+        tblArtifact.getAccessibleContext().setAccessibleParent(tblArtifact);
 
-        jLabel3.setFont(new java.awt.Font("Poor Richard", 1, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Object Table");
+        lblTabletitle.setFont(new java.awt.Font("Poor Richard", 1, 24)); // NOI18N
+        lblTabletitle.setForeground(new java.awt.Color(255, 255, 255));
+        lblTabletitle.setText("Artifacts  Table");
 
-        pnlForm.setBackground(new java.awt.Color(1, 0, 59));
-        pnlForm.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Object Form", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Poor Richard", 1, 18))); // NOI18N
+        pnlForm.setBackground(new java.awt.Color(137, 136, 246));
+        pnlForm.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Artifact Form", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Poor Richard", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
         pnlForm.setMaximumSize(new java.awt.Dimension(1080, 960));
         pnlForm.setMinimumSize(new java.awt.Dimension(1080, 960));
         pnlForm.setPreferredSize(new java.awt.Dimension(900, 300));
 
-        txtFldObjectId.setBackground(new java.awt.Color(0, 0, 0));
-        txtFldObjectId.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255)), "Object Id", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
-        txtFldObjectId.setCaretColor(new java.awt.Color(0, 102, 102));
-        txtFldObjectId.addActionListener(new java.awt.event.ActionListener() {
+        txtFldArtifactId.setBackground(new java.awt.Color(0, 0, 0));
+        txtFldArtifactId.setForeground(new java.awt.Color(255, 255, 255));
+        txtFldArtifactId.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255)), "Artifact Id", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        txtFldArtifactId.setCaretColor(new java.awt.Color(0, 102, 102));
+        txtFldArtifactId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFldObjectIdActionPerformed(evt);
+                txtFldArtifactIdActionPerformed(evt);
             }
         });
 
-        txtFldCondition.setBackground(new java.awt.Color(0, 0, 0));
-        txtFldCondition.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255)), "Condition", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
-        txtFldCondition.setCaretColor(new java.awt.Color(0, 102, 102));
-        txtFldCondition.addActionListener(new java.awt.event.ActionListener() {
+        txtFldArtifactName.setBackground(new java.awt.Color(0, 0, 0));
+        txtFldArtifactName.setForeground(new java.awt.Color(255, 255, 255));
+        txtFldArtifactName.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255)), "Artifact Name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        txtFldArtifactName.setCaretColor(new java.awt.Color(0, 102, 102));
+        txtFldArtifactName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFldConditionActionPerformed(evt);
+                txtFldArtifactNameActionPerformed(evt);
             }
         });
 
-        txtFldObjectName.setBackground(new java.awt.Color(0, 0, 0));
-        txtFldObjectName.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255)), "Object Name", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
-        txtFldObjectName.setCaretColor(new java.awt.Color(0, 102, 102));
-        txtFldObjectName.addActionListener(new java.awt.event.ActionListener() {
+        cmbBoxArtifactType.setBackground(new java.awt.Color(0, 0, 0));
+        cmbBoxArtifactType.setForeground(new java.awt.Color(255, 255, 255));
+        cmbBoxArtifactType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Painting", "Sculpture", "Relic", "Others" }));
+        cmbBoxArtifactType.setSelectedIndex(-1);
+        cmbBoxArtifactType.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Artifact Type", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        cmbBoxArtifactType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFldObjectNameActionPerformed(evt);
-            }
-        });
-
-        txtFldObjectType.setBackground(new java.awt.Color(0, 0, 0));
-        txtFldObjectType.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255)), "Object Type", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
-        txtFldObjectType.setCaretColor(new java.awt.Color(0, 102, 102));
-        txtFldObjectType.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFldObjectTypeActionPerformed(evt);
+                cmbBoxArtifactTypeActionPerformed(evt);
             }
         });
 
         txtFldCreator.setBackground(new java.awt.Color(0, 0, 0));
+        txtFldCreator.setForeground(new java.awt.Color(255, 255, 255));
         txtFldCreator.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255)), "Creator", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         txtFldCreator.setCaretColor(new java.awt.Color(0, 102, 102));
         txtFldCreator.addActionListener(new java.awt.event.ActionListener() {
@@ -493,6 +493,7 @@ public class Musemo extends javax.swing.JFrame {
         });
 
         txtFldStatus.setBackground(new java.awt.Color(0, 0, 0));
+        txtFldStatus.setForeground(new java.awt.Color(255, 255, 255));
         txtFldStatus.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255)), "Status", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         txtFldStatus.setCaretColor(new java.awt.Color(0, 102, 102));
         txtFldStatus.addActionListener(new java.awt.event.ActionListener() {
@@ -502,6 +503,7 @@ public class Musemo extends javax.swing.JFrame {
         });
 
         txtFldOrigin.setBackground(new java.awt.Color(0, 0, 0));
+        txtFldOrigin.setForeground(new java.awt.Color(255, 255, 255));
         txtFldOrigin.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255)), "Origin", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         txtFldOrigin.setCaretColor(new java.awt.Color(0, 102, 102));
         txtFldOrigin.addActionListener(new java.awt.event.ActionListener() {
@@ -511,6 +513,7 @@ public class Musemo extends javax.swing.JFrame {
         });
 
         txtFldRoom.setBackground(new java.awt.Color(0, 0, 0));
+        txtFldRoom.setForeground(new java.awt.Color(255, 255, 255));
         txtFldRoom.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255)), "Room", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         txtFldRoom.setCaretColor(new java.awt.Color(0, 102, 102));
         txtFldRoom.addActionListener(new java.awt.event.ActionListener() {
@@ -520,6 +523,7 @@ public class Musemo extends javax.swing.JFrame {
         });
 
         txtFldFloor.setBackground(new java.awt.Color(0, 0, 0));
+        txtFldFloor.setForeground(new java.awt.Color(255, 255, 255));
         txtFldFloor.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255)), "Floor", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         txtFldFloor.setCaretColor(new java.awt.Color(0, 102, 102));
         txtFldFloor.addActionListener(new java.awt.event.ActionListener() {
@@ -528,17 +532,17 @@ public class Musemo extends javax.swing.JFrame {
             }
         });
 
-        btnAddObject.setBackground(new java.awt.Color(0, 255, 102));
-        btnAddObject.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnAddObject.setForeground(new java.awt.Color(0, 0, 0));
-        btnAddObject.setText("Add Object");
-        btnAddObject.addActionListener(new java.awt.event.ActionListener() {
+        btnAddArtifact.setBackground(new java.awt.Color(153, 255, 204));
+        btnAddArtifact.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnAddArtifact.setForeground(new java.awt.Color(0, 0, 0));
+        btnAddArtifact.setText("Add Artifact");
+        btnAddArtifact.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddObjectActionPerformed(evt);
+                btnAddArtifactActionPerformed(evt);
             }
         });
 
-        btnDelete.setBackground(new java.awt.Color(0, 255, 102));
+        btnDelete.setBackground(new java.awt.Color(153, 255, 204));
         btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnDelete.setForeground(new java.awt.Color(0, 0, 0));
         btnDelete.setText("Delete");
@@ -548,7 +552,7 @@ public class Musemo extends javax.swing.JFrame {
             }
         });
 
-        btnUpdate.setBackground(new java.awt.Color(0, 255, 102));
+        btnUpdate.setBackground(new java.awt.Color(153, 255, 204));
         btnUpdate.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnUpdate.setForeground(new java.awt.Color(0, 0, 0));
         btnUpdate.setText("Update");
@@ -558,7 +562,7 @@ public class Musemo extends javax.swing.JFrame {
             }
         });
 
-        btnClear.setBackground(new java.awt.Color(0, 255, 102));
+        btnClear.setBackground(new java.awt.Color(153, 255, 204));
         btnClear.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnClear.setForeground(new java.awt.Color(0, 0, 0));
         btnClear.setText("Clear");
@@ -568,41 +572,70 @@ public class Musemo extends javax.swing.JFrame {
             }
         });
 
+        lblErrorMsgArtifactName.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblErrorMsgArtifactId.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblErrorMsgArtifactType.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblErrorMsgCreator.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblErrorMsgStatus.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblErrorMsgOrigin.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblErrorMsgCondition.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblErrorMsgFloor.setForeground(new java.awt.Color(255, 255, 255));
+
+        lblErrorMsgRoomNo.setForeground(new java.awt.Color(255, 255, 255));
+
+        cmbBoxCondition.setBackground(new java.awt.Color(0, 0, 0));
+        cmbBoxCondition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Excellent", "Good", "Bad", "Needs Restoration", "Damaged" }));
+        cmbBoxCondition.setSelectedIndex(-1);
+        cmbBoxCondition.setBorder(javax.swing.BorderFactory.createTitledBorder("Condition"));
+
         javax.swing.GroupLayout pnlFormLayout = new javax.swing.GroupLayout(pnlForm);
         pnlForm.setLayout(pnlFormLayout);
         pnlFormLayout.setHorizontalGroup(
             pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFormLayout.createSequentialGroup()
-                .addGap(142, 142, 142)
+                .addGap(50, 50, 50)
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlFormLayout.createSequentialGroup()
                         .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFldObjectId, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFldArtifactId, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtFldRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblErrorMsgObjectId, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblErrorMsgArtifactId, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblErrorMsgRoomNo, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(64, 64, 64)
                         .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlFormLayout.createSequentialGroup()
-                                .addComponent(btnAddObject)
-                                .addGap(74, 74, 74)
-                                .addComponent(btnUpdate)
-                                .addGap(76, 76, 76)
-                                .addComponent(btnDelete)
-                                .addGap(69, 69, 69)
-                                .addComponent(btnClear))
-                            .addGroup(pnlFormLayout.createSequentialGroup()
+                                .addGap(64, 64, 64)
                                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtFldObjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblErrorMsgObjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtFldArtifactName, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblErrorMsgArtifactName, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(40, 40, 40)
-                                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtFldObjectType, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblErrorMsgObjectType, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblErrorMsgArtifactType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cmbBoxArtifactType, 0, 216, Short.MAX_VALUE))
                                 .addGap(45, 45, 45)
                                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblErrorMsgCreator, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtFldCreator, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(txtFldCreator, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFormLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlFormLayout.createSequentialGroup()
+                                        .addGap(198, 198, 198)
+                                        .addComponent(btnUpdate)
+                                        .addGap(76, 76, 76)
+                                        .addComponent(btnDelete)
+                                        .addGap(69, 69, 69)
+                                        .addComponent(btnClear))
+                                    .addGroup(pnlFormLayout.createSequentialGroup()
+                                        .addComponent(btnAddArtifact)
+                                        .addGap(389, 389, 389)))
+                                .addGap(62, 62, 62))))
                     .addGroup(pnlFormLayout.createSequentialGroup()
                         .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtFldStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -612,78 +645,104 @@ public class Musemo extends javax.swing.JFrame {
                             .addComponent(txtFldOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblErrorMsgOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(40, 40, 40)
-                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFldCondition, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblErrorMsgCondition, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblErrorMsgCondition, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbBoxCondition, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(45, 45, 45)
                         .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblErrorMsgFloor, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtFldFloor, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         pnlFormLayout.setVerticalGroup(
             pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFormLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtFldObjectId, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFldObjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFldObjectType, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFldCreator, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtFldArtifactId, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFldArtifactName)
+                    .addComponent(cmbBoxArtifactType)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFormLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(txtFldCreator, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblErrorMsgObjectName, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblErrorMsgObjectId, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblErrorMsgObjectType, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblErrorMsgArtifactName, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblErrorMsgArtifactId, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblErrorMsgArtifactType, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblErrorMsgCreator, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtFldStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFldOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFldCondition, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFldFloor, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtFldStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtFldOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtFldFloor, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbBoxCondition))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblErrorMsgStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblErrorMsgOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblErrorMsgCondition, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblErrorMsgFloor, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addComponent(txtFldRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFldRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnAddObject, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAddArtifact, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblErrorMsgRoomNo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblErrorMsgRoomNo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        javax.swing.GroupLayout pnlManageObjectsLayout = new javax.swing.GroupLayout(pnlManageObjects);
-        pnlManageObjects.setLayout(pnlManageObjectsLayout);
-        pnlManageObjectsLayout.setHorizontalGroup(
-            pnlManageObjectsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        btnBackToHome1.setBackground(new java.awt.Color(255, 255, 255));
+        btnBackToHome1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnBackToHome1.setForeground(new java.awt.Color(102, 0, 153));
+        btnBackToHome1.setText("Back");
+        btnBackToHome1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackToHome1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlManageArtifactsLayout = new javax.swing.GroupLayout(pnlManageArtifacts);
+        pnlManageArtifacts.setLayout(pnlManageArtifactsLayout);
+        pnlManageArtifactsLayout.setHorizontalGroup(
+            pnlManageArtifactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblManageBojectsHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnlForm, javax.swing.GroupLayout.DEFAULT_SIZE, 1300, Short.MAX_VALUE)
-            .addGroup(pnlManageObjectsLayout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addGroup(pnlManageObjectsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(spTblObjects, javax.swing.GroupLayout.PREFERRED_SIZE, 1168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(pnlManageArtifactsLayout.createSequentialGroup()
+                .addGroup(pnlManageArtifactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlManageArtifactsLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblTabletitle)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlManageArtifactsLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(pnlManageArtifactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(spTblObjects, javax.swing.GroupLayout.PREFERRED_SIZE, 1124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pnlForm, javax.swing.GroupLayout.PREFERRED_SIZE, 1124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)))
+                .addComponent(btnBackToHome1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
-        pnlManageObjectsLayout.setVerticalGroup(
-            pnlManageObjectsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlManageObjectsLayout.createSequentialGroup()
+        pnlManageArtifactsLayout.setVerticalGroup(
+            pnlManageArtifactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlManageArtifactsLayout.createSequentialGroup()
                 .addComponent(lblManageBojectsHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(spTblObjects, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                .addComponent(pnlForm, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlManageArtifactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlManageArtifactsLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(btnBackToHome1))
+                    .addGroup(pnlManageArtifactsLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTabletitle)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(spTblObjects, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(pnlForm, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         spTblObjects.getAccessibleContext().setAccessibleParent(spTblObjects);
@@ -720,7 +779,7 @@ public class Musemo extends javax.swing.JFrame {
         pnlLoadingScreen.add(lblLoadingTitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 620, 200));
 
         lblLoadingScreenGif.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/musemo/resources/loading screen.gif"))); // NOI18N
-        pnlLoadingScreen.add(lblLoadingScreenGif, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 1080, 750));
+        pnlLoadingScreen.add(lblLoadingScreenGif, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 1080, 700));
 
         lblCopyRight.setBackground(new java.awt.Color(255, 255, 255));
         lblCopyRight.setForeground(new java.awt.Color(255, 255, 255));
@@ -746,10 +805,6 @@ public class Musemo extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnAdminLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminLoginActionPerformed
-        loadScreen("AdminLoginScreen"); // Load the admin login screen
-    }//GEN-LAST:event_btnAdminLoginActionPerformed
 
     private void btnBackToHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackToHomeActionPerformed
         loadScreen("HomeScreen"); // Load the home screen
@@ -787,29 +842,29 @@ public class Musemo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_pwdFldAdminLoginActionPerformed
 
-    private void txtFldObjectIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldObjectIdActionPerformed
+    private void txtFldArtifactIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldArtifactIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtFldObjectIdActionPerformed
+    }//GEN-LAST:event_txtFldArtifactIdActionPerformed
 
-    private void btnAddObjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddObjectActionPerformed
+    private void btnAddArtifactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddArtifactActionPerformed
         boolean isValid = true;
-        // Validate Object ID
-        isValid &= validateField(txtFldObjectId, "Object ID", lblErrorMsgObjectName, "Must be 3-digit number.",
-                errorColor, greenColor, ValidationUtil.isValidObjectId(Integer.parseInt(txtFldObjectId.getText()))
-        );
+        
+        // Validate Artifact ID
+        try{
+            isValid &= validateField(txtFldArtifactId, "Artifact ID", lblErrorMsgArtifactId, "Must be 3-digit number.",
+                    errorColor, greenColor, ValidationUtil.isValidObjectId(Integer.parseInt(txtFldArtifactId.getText()))
+            );
+        } catch(NumberFormatException e) {
+            isValid &= validateField(txtFldArtifactId, "Artifact ID", lblErrorMsgArtifactId, "Field cannot be empty",
+                    errorColor, greenColor, false
+            );
+        }
 
-        // Validate Object Name
-        isValid &= validateField(
-                txtFldObjectName, "Object Name", lblErrorMsgObjectName, "Must contain only alphabets.",
-                errorColor, greenColor, ValidationUtil.isValidName(txtFldObjectName.getText())
+        // Validate Artifact Name
+        isValid &= validateField(txtFldArtifactName, "Artifact Name", lblErrorMsgArtifactName, "Must contain only alphabets.",
+                errorColor, greenColor, ValidationUtil.isValidName(txtFldArtifactName.getText())
         );
-
-        // Validate Object Type
-        isValid &= validateField(
-            txtFldObjectType, "Object Type", lblErrorMsgObjectType, "Must be Painting, Sculpture, Artifact, or Other.",
-            errorColor, greenColor, ValidationUtil.isValidObjectType(txtFldObjectType.getText())
-        );
-
+        
         // Validate Creator
         isValid &= validateField(
             txtFldCreator, "Creator", lblErrorMsgCreator, "Must contain only alphabets.",
@@ -828,12 +883,6 @@ public class Musemo extends javax.swing.JFrame {
             errorColor, greenColor, ValidationUtil.isValidName(txtFldOrigin.getText())
         );
 
-        // Validate Condition
-        isValid &= validateField(
-            txtFldCondition, "Condition", lblErrorMsgCondition, "Must be Excellent, Good, Bad, Needs Restoration, or Damaged.",
-            errorColor, greenColor, ValidationUtil.isValidCondition(txtFldCondition.getText())
-        );
-
         // Validate Floor
         try{
             isValid &= validateField(
@@ -843,7 +892,7 @@ public class Musemo extends javax.swing.JFrame {
         
         } catch(NumberFormatException e) {
             validateField(
-                txtFldFloor, "Floor", lblErrorMsgFloor, "Must be a number between 1 and 5.",
+                txtFldFloor, "Floor", lblErrorMsgFloor, "Must be a valid number",
                 errorColor, greenColor, false
             );
         }
@@ -862,44 +911,44 @@ public class Musemo extends javax.swing.JFrame {
         }
         
         if (isValid) {
-            // Create a ObjectModel instance
-            ObjectModel newObject = new ObjectModel(
-                    Integer.parseInt(txtFldObjectId.getText().trim()),
-                    txtFldObjectName.getText().trim(),
-                    txtFldObjectType.getText().trim(),
+            // Create a ArtifactModel instance
+            ArtifactModel newArtifact = new ArtifactModel(
+                    Integer.parseInt(txtFldArtifactId.getText().trim()),
+                    txtFldArtifactName.getText().trim(),
+                    cmbBoxArtifactType.getSelectedItem().toString().trim(),
                     txtFldCreator.getText().trim(),
                     txtFldStatus.getText().trim(),
                     txtFldOrigin.getText().trim(),
-                    txtFldCondition.getText().trim(),
+                    cmbBoxCondition.getSelectedItem().toString().trim(),
                     Short.parseShort(txtFldFloor.getText().trim()),
                     Short.parseShort(txtFldRoom.getText().trim())                    
             );
 
             // Check for duplicate Object ID
-            if (checkDuplicateObject(newObject)) {
-                txtFldObjectId.setBorder(createTitledBorder(errorColor, "Object ID"));
-                showDialogBox("Object with this ID already exists.", "Duplicate Entry!", JOptionPane.WARNING_MESSAGE);
+            if (checkDuplicateArtifact(newArtifact)) {
+                txtFldArtifactId.setBorder(createTitledBorder(errorColor, "Object ID"));
+                showDialogBox("Artifact with this ID already exists.", "Duplicate Entry!", JOptionPane.WARNING_MESSAGE);
             } else {
-                // Add the object if no duplicate is found
-                objectList.add(newObject);
-                clearObjectForm();
-                loadListToTable(objectList);
-                txtFldObjectId.setBorder(createTitledBorder(greenColor, "Object ID"));
-                showDialogBox("Object added successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                // Add the Artifact if no duplicate is found
+                artifactList.add(newArtifact);
+                clearArtifactForm();
+                loadListToTable(artifactList);
+                txtFldArtifactId.setBorder(createTitledBorder(greenColor, "Object ID"));
+                showDialogBox("Artifact added successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
             }
         }
-    }//GEN-LAST:event_btnAddObjectActionPerformed
+    }//GEN-LAST:event_btnAddArtifactActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-
+        deleteArtifact();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        // TODO add your handling code here:
+        updateArtifact();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
-        clearObjectForm();
+        clearArtifactForm();
     }//GEN-LAST:event_btnClearActionPerformed
     /**
      * Validates a single input field based on specific criteria and updates its
@@ -950,17 +999,9 @@ public class Musemo extends javax.swing.JFrame {
         );
     }
     
-    private void txtFldConditionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldConditionActionPerformed
+    private void txtFldArtifactNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldArtifactNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtFldConditionActionPerformed
-
-    private void txtFldObjectNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldObjectNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFldObjectNameActionPerformed
-
-    private void txtFldObjectTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldObjectTypeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFldObjectTypeActionPerformed
+    }//GEN-LAST:event_txtFldArtifactNameActionPerformed
 
     private void txtFldCreatorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldCreatorActionPerformed
         // TODO add your handling code here:
@@ -981,6 +1022,26 @@ public class Musemo extends javax.swing.JFrame {
     private void txtFldFloorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldFloorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFldFloorActionPerformed
+
+    private void btnBackToHome1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackToHome1ActionPerformed
+       loadScreen("DashboardScreen");
+    }//GEN-LAST:event_btnBackToHome1ActionPerformed
+
+    private void cmbBoxArtifactTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBoxArtifactTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbBoxArtifactTypeActionPerformed
+
+    private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
+        loadScreen("AdminLoginScreen");
+    }//GEN-LAST:event_btnLogoutActionPerformed
+
+    private void btnAdminLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminLoginActionPerformed
+        loadScreen("AdminLoginScreen"); // Load the admin login screen
+    }//GEN-LAST:event_btnAdminLoginActionPerformed
+
+    private void btnBookNowPHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookNowPHActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBookNowPHActionPerformed
     /**
      * Initializes the layout of the application by setting up the CardLayout
      * and adding panels for different screens. Each panel is uniquely
@@ -995,39 +1056,177 @@ public class Musemo extends javax.swing.JFrame {
         getContentPane().add(pnlAdminLoginScreen, "AdminLoginScreen");
         getContentPane().add(pnlHomeScreen, "HomeScreen");
         getContentPane().add(pnlAdminDashboardScreen, "DashboardScreen");
-        getContentPane().add(pnlManageObjects, "ObjectManagementScreen");
+        getContentPane().add(pnlManageArtifacts, "ObjectManagementScreen");
 
 
         // Start with the loading screen
         loadScreen("LoadingScreen");
     }   
     /**
-     * Initializes the Object data and Object Table.
+     * Initializes the Artifact data and Artifact Table.
      * Adds some Initial data into the Object List.
      */
     private void initializaData() {
-        objectList = new LinkedList<>();
+        artifactList = new LinkedList<>();
         // Registering sample objects
-        enterObject(new ObjectModel(110, "Mona Lisa", "Painitng", "Leonardo da Vinci", "Permanent", "Italy", "Excellent", (short)1 ,(short)2));
-        enterObject(new ObjectModel(140, "The Thinker", "Sculpture", "Auguste Robin", "Permanent", "France", "Good", (short)1 ,(short)5));
-        enterObject(new ObjectModel(777, "Winged Victory", "Sculpture", "Unlnown", "Temporary", "Greece", "Damaged", (short)5 ,(short)7));
-        enterObject(new ObjectModel(401, "Rosetta Stone", "Artifact", "Ancient Egyptians", "Permanent", "Egypt", "Needs Restoration", (short)02 ,(short)1));
-        enterObject(new ObjectModel(242, "Starry Night", "Painitng", "Vincent van Gogh", "Temporary", "Netherlands", "Excellent", (short)3 ,(short)2));        
+        enterArtifact(new ArtifactModel(110, "Mona Lisa", "Painitng", "Leonardo da Vinci", "Permanent", "Italy", "Excellent", (short)1 ,(short)2));
+        enterArtifact(new ArtifactModel(140, "The Thinker", "Sculpture", "Auguste Robin", "Permanent", "France", "Good", (short)1 ,(short)5));
+        enterArtifact(new ArtifactModel(777, "Winged Victory", "Sculpture", "Unlnown", "Temporary", "Greece", "Damaged", (short)5 ,(short)7));
+        enterArtifact(new ArtifactModel(401, "Rosetta Stone", "Relic", "Ancient Egyptians", "Permanent", "Egypt", "Needs Restoration", (short)02 ,(short)1));
+        enterArtifact(new ArtifactModel(242, "Starry Night", "Painitng", "Vincent van Gogh", "Temporary", "Netherlands", "Excellent", (short)3 ,(short)2));        
     }
     /**
-     * Method to add object data to table from List. 
+     * Method to add Artifact data to table from List. 
      * @param object 
      */
-    private void enterObject(ObjectModel object){
-        objectList.add(object);
+    private void enterArtifact(ArtifactModel artifact){
+        artifactList.add(artifact);
         
-        DefaultTableModel model = (DefaultTableModel) tblObject.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblArtifact.getModel();
         model.addRow(new Object[]{
-            object.getObjectID(), object.getObjectName(), object.getObjectType(),
-            object.getCreator(), object.getStatus(),object.getOrigin(), 
-            object.getCondition(), object.getFloor(), object.getRoomNo()
+            artifact.getArtifactID(), artifact.getArtifactName(), artifact.getArtifactType(),
+            artifact.getCreator(), artifact.getStatus(),artifact.getOrigin(), 
+            artifact.getCondition(), artifact.getFloor(), artifact.getRoomNo()
         });
     }
+    private void updateArtifact(){
+        // Get the selected artifact ID
+        int artifactId = Integer.parseInt(txtFldArtifactId.getText());
+        boolean isValid = true;
+        // Validate the entered ID
+        try{
+            isValid &= validateField(txtFldArtifactId, "Artifact ID", lblErrorMsgArtifactId, "Must be 3-digit number.",
+                    errorColor, greenColor, ValidationUtil.isValidObjectId(Integer.parseInt(txtFldArtifactId.getText()))
+            );
+        } catch(NumberFormatException e) {
+            isValid &= validateField(txtFldArtifactId, "Artifact ID", lblErrorMsgArtifactId, "Field cannot be empty",
+                    errorColor, greenColor, false
+            );
+        }    
+
+        // Validate Artifact Name
+        isValid &= validateField(txtFldArtifactName, "Artifact Name", lblErrorMsgArtifactName, "Must contain only alphabets.",
+                errorColor, greenColor, ValidationUtil.isValidName(txtFldArtifactName.getText())
+        );
+        
+        // Validate Creator
+        isValid &= validateField(
+            txtFldCreator, "Creator", lblErrorMsgCreator, "Must contain only alphabets.",
+            errorColor, greenColor, ValidationUtil.isValidName(txtFldCreator.getText())
+        );
+
+        // Validate Status
+        isValid &= validateField(
+            txtFldStatus, "Status", lblErrorMsgStatus, "Must be Permanent or Temporary.",
+            errorColor, greenColor, ValidationUtil.isValidStatus(txtFldStatus.getText())
+        );
+
+        // Validate Origin
+        isValid &= validateField(
+            txtFldOrigin, "Origin", lblErrorMsgOrigin, "Must contain only alphabets.",
+            errorColor, greenColor, ValidationUtil.isValidName(txtFldOrigin.getText())
+        );
+
+        // Validate Floor
+        try{
+            isValid &= validateField(
+                txtFldFloor, "Floor", lblErrorMsgFloor, "Must be a number between 1 and 5.",
+                errorColor, greenColor, ValidationUtil.isValidFloor(Short.parseShort(txtFldFloor.getText()))
+            );
+        
+        } catch(NumberFormatException e) {
+            validateField(
+                txtFldFloor, "Floor", lblErrorMsgFloor, "Must be a valid number",
+                errorColor, greenColor, false
+            );
+        }
+
+        // Validate Room Number
+        try{
+            isValid &= validateField(
+                txtFldRoom, "Room Number", lblErrorMsgRoomNo, "Must be a number between 1 and 7.",
+                errorColor, greenColor, ValidationUtil.isValidRoom(Short.parseShort(txtFldRoom.getText()))
+            );
+        } catch(NumberFormatException e) {
+            validateField(
+                txtFldRoom, "Room Number", lblErrorMsgRoomNo, "Must be a valid number",
+                errorColor, greenColor, false
+            );
+        }
+        
+        if(isValid){
+            for (ArtifactModel artifact : artifactList) { // artifactList is a List<Artifact>
+                if (artifact.getArtifactID() == artifactId) {
+                    artifact.setArtifactName(txtFldArtifactName.getText());
+                    artifact.setArtifactType(cmbBoxArtifactType.getSelectedItem().toString());
+                    artifact.setCreator(txtFldCreator.getText());
+                    artifact.setOrigin(txtFldOrigin.getText());
+                    artifact.setCondition(cmbBoxCondition.getSelectedItem().toString());
+                    artifact.setStatus(txtFldStatus.getText());
+                    artifact.setFloor(Short.parseShort(txtFldFloor.getText()));
+                    artifact.setRoomNo(Short.parseShort(txtFldRoom.getText()));
+                    loadListToTable(artifactList);
+                }               
+                else{
+                    showDialogBox("Artifact not found or update failed.", "Error", JOptionPane.ERROR_MESSAGE);   
+                }
+            }
+        }
+    }
+    /**
+     * Method to delete the artifact with entered id.
+     */
+    private void deleteArtifact() {
+        // Get the selected artifact ID
+        int artifactId = Integer.parseInt(txtFldArtifactId.getText());
+        boolean isValid = true;
+        // Validate if an ID is provided
+        try{
+            isValid &= validateField(txtFldArtifactId, "Artifact ID", lblErrorMsgArtifactId, "Must be 3-digit number.",
+                    errorColor, greenColor, ValidationUtil.isValidObjectId(Integer.parseInt(txtFldArtifactId.getText()))
+            );
+        } catch(NumberFormatException e) {
+            isValid &= validateField(txtFldArtifactId, "Artifact ID", lblErrorMsgArtifactId, "Field cannot be empty",
+                    errorColor, greenColor, false
+            );
+        }
+        if(isValid){
+            // Confirm deletion with the user
+            int confirm = JOptionPane.showConfirmDialog(this, 
+                "Are you sure you want to delete the object with ID: " + artifactId + "?", 
+                "Confirm Deletion", 
+                JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                // Perform deletion from the data
+                boolean isDeleted = deleteFromList(artifactId);
+
+                if (isDeleted) {
+                    showDialogBox("Artifact successfully deleted.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    clearArtifactForm(); // Clear the form if needed
+                } else {
+                    showDialogBox("Artifact not found or deletion failed.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }
+
+    /**
+     * Method to delete artifact from list
+     * @param artifactId
+     * @return 
+     */
+    private boolean deleteFromList(int artifactId) {
+        for (ArtifactModel artifact : artifactList) { // artifactList is a List<Artifact>
+            if (artifact.getArtifactID() == artifactId) {
+                artifactList.remove(artifact);
+                loadListToTable(artifactList);
+                return true; // Successfully deleted
+            }
+        }
+        return false; // Not found
+    }
+
     /**
      * Switches the application screen to the specified screen name.
      *
@@ -1067,20 +1266,20 @@ public class Musemo extends javax.swing.JFrame {
     }
     
     /**
-     * Populates the JTable with the current list of Object records. 
-     * 
+     * Populates the JTable with the current list of Artifact records. 
+     * And clears the table contents before adding
      */
-    private void loadListToTable(List<ObjectModel> objectList) {
-        DefaultTableModel model = (DefaultTableModel) tblObject.getModel();
+    private void loadListToTable(List<ArtifactModel> artifactList) {
+        DefaultTableModel model = (DefaultTableModel) tblArtifact.getModel();
 
         // Clear existing rows if needed
-        //model.setRowCount(0);
+        model.setRowCount(0);
 
         // Populate the table with object data
-        objectList.forEach(object -> model.addRow(new Object[]{
-            object.getObjectID(),
-            object.getObjectName(),
-            object.getObjectType(),
+        artifactList.forEach(object -> model.addRow(new Object[]{
+            object.getArtifactID(),
+            object.getArtifactName(),
+            object.getArtifactType(),
             object.getCreator(),
             object.getStatus(),
             object.getOrigin(),
@@ -1106,23 +1305,23 @@ public class Musemo extends javax.swing.JFrame {
      * @param object ObjectModel object to check for duplicates
      * @return true id duplicate is found
      */
-    private boolean checkDuplicateObject(ObjectModel object) {
-        return objectList.stream()
+    private boolean checkDuplicateArtifact(ArtifactModel artifact) {
+        return artifactList.stream()
                 .anyMatch(existingObject
-                        -> existingObject.getObjectID() == object.getObjectID());
+                        -> existingObject.getArtifactID() == artifact.getArtifactID());
     }
     
     /**
      * Method to clear all the entered data from the text fields all at once
      */
-    private void clearObjectForm() {
-        txtFldObjectId.setText("");
-        txtFldObjectName.setText("");
-        txtFldObjectType.setText("");
+    private void clearArtifactForm() {
+        txtFldArtifactId.setText("");
+        txtFldArtifactName.setText("");
+        cmbBoxArtifactType.setSelectedIndex(-1);
         txtFldCreator.setText("");
         txtFldOrigin.setText("");
         txtFldStatus.setText("");
-        txtFldCondition.setText("");
+        cmbBoxCondition.setSelectedIndex(-1);
         txtFldFloor.setText("");
         txtFldRoom.setText("");
     }
@@ -1162,29 +1361,32 @@ public class Musemo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddObject;
+    private javax.swing.JButton btnAddArtifact;
     private javax.swing.JButton btnAdminLogin;
     private javax.swing.JButton btnBackToHome;
+    private javax.swing.JButton btnBackToHome1;
+    private javax.swing.JButton btnBookNowPH;
     private javax.swing.JButton btnClear;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnManageObjects;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox<String> cmbBoxArtifactType;
+    private javax.swing.JComboBox<String> cmbBoxCondition;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblAboutUsSlogan;
     private javax.swing.JLabel lblAboutUsTitle;
     private javax.swing.JLabel lblCopyRight;
     private javax.swing.JLabel lblDashboard;
     private javax.swing.JLabel lblDashboardTitle;
+    private javax.swing.JLabel lblErrorMsgArtifactId;
+    private javax.swing.JLabel lblErrorMsgArtifactName;
+    private javax.swing.JLabel lblErrorMsgArtifactType;
     private javax.swing.JLabel lblErrorMsgCondition;
     private javax.swing.JLabel lblErrorMsgCreator;
     private javax.swing.JLabel lblErrorMsgFloor;
-    private javax.swing.JLabel lblErrorMsgObjectId;
-    private javax.swing.JLabel lblErrorMsgObjectName;
-    private javax.swing.JLabel lblErrorMsgObjectType;
     private javax.swing.JLabel lblErrorMsgOrigin;
     private javax.swing.JLabel lblErrorMsgRoomNo;
     private javax.swing.JLabel lblErrorMsgStatus;
@@ -1192,12 +1394,13 @@ public class Musemo extends javax.swing.JFrame {
     private javax.swing.JLabel lblFounderMessage;
     private javax.swing.JLabel lblHomePageHeader;
     private javax.swing.JLabel lblHomePageHeader1;
-    private javax.swing.JLabel lblHomePageWelcome;
+    private javax.swing.JLabel lblHomePageWelcome1;
     private javax.swing.JLabel lblLoadingScreenGif;
     private javax.swing.JLabel lblLoadingTitle;
     private javax.swing.JLabel lblLoginError;
     private javax.swing.JLabel lblLoginIcon;
     private javax.swing.JLabel lblManageBojectsHeader;
+    private javax.swing.JLabel lblTabletitle;
     private javax.swing.JLabel lblloading;
     private javax.swing.JPanel pnlAboutPage;
     private javax.swing.JPanel pnlAdminDashboardScreen;
@@ -1206,18 +1409,17 @@ public class Musemo extends javax.swing.JFrame {
     private javax.swing.JPanel pnlHome;
     private javax.swing.JPanel pnlHomeScreen;
     private javax.swing.JPanel pnlLoadingScreen;
-    private javax.swing.JPanel pnlManageObjects;
+    private javax.swing.JPanel pnlManageArtifacts;
     private javax.swing.JProgressBar prgBarLoadingScreen;
     private javax.swing.JPasswordField pwdFldAdminLogin;
+    private javax.swing.JScrollPane scrlPaneHome;
     private javax.swing.JScrollPane spTblObjects;
-    private javax.swing.JTable tblObject;
+    private javax.swing.JTable tblArtifact;
     private javax.swing.JTextField txtFldAdminLogin;
-    private javax.swing.JTextField txtFldCondition;
+    private javax.swing.JTextField txtFldArtifactId;
+    private javax.swing.JTextField txtFldArtifactName;
     private javax.swing.JTextField txtFldCreator;
     private javax.swing.JTextField txtFldFloor;
-    private javax.swing.JTextField txtFldObjectId;
-    private javax.swing.JTextField txtFldObjectName;
-    private javax.swing.JTextField txtFldObjectType;
     private javax.swing.JTextField txtFldOrigin;
     private javax.swing.JTextField txtFldRoom;
     private javax.swing.JTextField txtFldStatus;
