@@ -59,12 +59,13 @@ public class Musemo extends javax.swing.JFrame {
         lblFounderHeader = new javax.swing.JLabel();
         pnlAdminLoginScreen = new javax.swing.JPanel();
         btnBackToHome = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        lblLoginMessage = new javax.swing.JLabel();
         txtFldAdminLogin = new javax.swing.JTextField();
         pwdFldAdminLogin = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
         lblLoginError = new javax.swing.JLabel();
         lblLoginIcon = new javax.swing.JLabel();
+        lblLoginMessage1 = new javax.swing.JLabel();
         pnlAdminDashboardScreen = new javax.swing.JPanel();
         lblHomePageHeader1 = new javax.swing.JLabel();
         lblDashboardTitle = new javax.swing.JLabel();
@@ -110,6 +111,7 @@ public class Musemo extends javax.swing.JFrame {
         pnlHomeScreen.setBackground(new java.awt.Color(1, 0, 59));
         pnlHomeScreen.setMaximumSize(new java.awt.Dimension(1300, 700));
         pnlHomeScreen.setMinimumSize(new java.awt.Dimension(1300, 700));
+        pnlHomeScreen.setPreferredSize(new java.awt.Dimension(1300, 700));
 
         lblHomePageHeader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/musemo/resources/AllPageHeader.png"))); // NOI18N
 
@@ -152,6 +154,8 @@ public class Musemo extends javax.swing.JFrame {
         jTabbedPane1.addTab("Home", scrlPaneHome);
 
         pnlAboutPage.setBackground(new java.awt.Color(9, 1, 59));
+        pnlAboutPage.setMaximumSize(new java.awt.Dimension(1300, 700));
+        pnlAboutPage.setMinimumSize(new java.awt.Dimension(1300, 700));
         pnlAboutPage.setPreferredSize(new java.awt.Dimension(1300, 700));
 
         lblFounderMessage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/musemo/resources/AboutPageMessage.jpg"))); // NOI18N
@@ -177,7 +181,7 @@ public class Musemo extends javax.swing.JFrame {
             pnlAboutPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlAboutPageLayout.createSequentialGroup()
                 .addGroup(pnlAboutPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblFounderMessage)
+                    .addComponent(lblFounderMessage, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlAboutPageLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(lblFounderHeader)))
@@ -199,11 +203,11 @@ public class Musemo extends javax.swing.JFrame {
                 .addComponent(lblAboutUsTitle)
                 .addGap(18, 18, 18)
                 .addComponent(lblAboutUsSlogan)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 270, Short.MAX_VALUE)
+                .addGap(52, 52, 52)
                 .addComponent(lblFounderHeader)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblFounderMessage)
-                .addGap(35, 35, 35))
+                .addContainerGap(213, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("About", pnlAboutPage);
@@ -220,7 +224,8 @@ public class Musemo extends javax.swing.JFrame {
             .addGroup(pnlHomeScreenLayout.createSequentialGroup()
                 .addComponent(lblHomePageHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 775, Short.MAX_VALUE))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlAdminLoginScreen.setBackground(new java.awt.Color(1, 0, 59));
@@ -239,10 +244,10 @@ public class Musemo extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Admin Login");
+        lblLoginMessage.setBackground(new java.awt.Color(255, 255, 255));
+        lblLoginMessage.setFont(new java.awt.Font("Poor Richard", 1, 36)); // NOI18N
+        lblLoginMessage.setForeground(new java.awt.Color(255, 255, 255));
+        lblLoginMessage.setText("Welcome");
 
         txtFldAdminLogin.setBackground(new java.awt.Color(1, 0, 59));
         txtFldAdminLogin.setForeground(new java.awt.Color(153, 153, 255));
@@ -280,6 +285,11 @@ public class Musemo extends javax.swing.JFrame {
 
         lblLoginIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/musemo/resources/LoginImg.jpg"))); // NOI18N
 
+        lblLoginMessage1.setBackground(new java.awt.Color(255, 255, 255));
+        lblLoginMessage1.setFont(new java.awt.Font("Poor Richard", 1, 26)); // NOI18N
+        lblLoginMessage1.setForeground(new java.awt.Color(255, 255, 255));
+        lblLoginMessage1.setText("Please  Login to Dashboard");
+
         javax.swing.GroupLayout pnlAdminLoginScreenLayout = new javax.swing.GroupLayout(pnlAdminLoginScreen);
         pnlAdminLoginScreen.setLayout(pnlAdminLoginScreenLayout);
         pnlAdminLoginScreenLayout.setHorizontalGroup(
@@ -287,23 +297,28 @@ public class Musemo extends javax.swing.JFrame {
             .addGroup(pnlAdminLoginScreenLayout.createSequentialGroup()
                 .addGroup(pnlAdminLoginScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlAdminLoginScreenLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(pnlAdminLoginScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBackToHome, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pnlAdminLoginScreenLayout.createSequentialGroup()
-                                .addGap(49, 49, 49)
-                                .addGroup(pnlAdminLoginScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtFldAdminLogin)
-                                    .addComponent(pwdFldAdminLogin)
-                                    .addComponent(btnLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
-                                    .addGroup(pnlAdminLoginScreenLayout.createSequentialGroup()
-                                        .addGap(15, 15, 15)
-                                        .addComponent(jLabel2)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlAdminLoginScreenLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lblLoginError, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)))
-                .addGap(33, 33, 33)
+                        .addComponent(btnBackToHome, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlAdminLoginScreenLayout.createSequentialGroup()
+                        .addContainerGap(69, Short.MAX_VALUE)
+                        .addGroup(pnlAdminLoginScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblLoginError, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnlAdminLoginScreenLayout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addGroup(pnlAdminLoginScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlAdminLoginScreenLayout.createSequentialGroup()
+                                        .addComponent(lblLoginMessage)
+                                        .addGap(140, 140, 140))
+                                    .addGroup(pnlAdminLoginScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblLoginMessage1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(pnlAdminLoginScreenLayout.createSequentialGroup()
+                                            .addGroup(pnlAdminLoginScreenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(pwdFldAdminLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(txtFldAdminLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(17, 17, 17))))))
+                        .addGap(51, 51, 51)))
                 .addComponent(lblLoginIcon))
         );
         pnlAdminLoginScreenLayout.setVerticalGroup(
@@ -311,15 +326,17 @@ public class Musemo extends javax.swing.JFrame {
             .addGroup(pnlAdminLoginScreenLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(btnBackToHome)
-                .addGap(87, 87, 87)
-                .addComponent(jLabel2)
+                .addGap(52, 52, 52)
+                .addComponent(lblLoginMessage)
+                .addGap(18, 18, 18)
+                .addComponent(lblLoginMessage1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblLoginError, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtFldAdminLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addGap(34, 34, 34)
                 .addComponent(pwdFldAdminLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(51, 51, 51)
+                .addGap(72, 72, 72)
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addComponent(lblLoginIcon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -476,8 +493,7 @@ public class Musemo extends javax.swing.JFrame {
 
         cmbBoxArtifactType.setBackground(new java.awt.Color(0, 0, 0));
         cmbBoxArtifactType.setForeground(new java.awt.Color(255, 255, 255));
-        cmbBoxArtifactType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Painting", "Sculpture", "Relic", "Others" }));
-        cmbBoxArtifactType.setSelectedIndex(-1);
+        cmbBoxArtifactType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Painting", "Sculpture", "Relic", "Fossil", "Others" }));
         cmbBoxArtifactType.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Artifact Type", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
         cmbBoxArtifactType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1373,7 +1389,6 @@ public class Musemo extends javax.swing.JFrame {
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cmbBoxArtifactType;
     private javax.swing.JComboBox<String> cmbBoxCondition;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblAboutUsSlogan;
     private javax.swing.JLabel lblAboutUsTitle;
@@ -1398,6 +1413,8 @@ public class Musemo extends javax.swing.JFrame {
     private javax.swing.JLabel lblLoadingTitle;
     private javax.swing.JLabel lblLoginError;
     private javax.swing.JLabel lblLoginIcon;
+    private javax.swing.JLabel lblLoginMessage;
+    private javax.swing.JLabel lblLoginMessage1;
     private javax.swing.JLabel lblManageBojectsHeader;
     private javax.swing.JLabel lblTabletitle;
     private javax.swing.JLabel lblloading;
