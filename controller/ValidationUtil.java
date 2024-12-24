@@ -10,7 +10,6 @@ public class ValidationUtil {
     private static final Pattern ARTIFACT_ID_PATTERN = Pattern.compile("^\\d{3}$");
     private static final Pattern NAME_PATTERN = Pattern.compile("^[a-zA-Z\\s]+$");
     private static final Pattern STATUS_PATTERN = Pattern.compile("^(Permanent|Temporary)$");
-    private static final Pattern CONDITION_PATTERN = Pattern.compile("^(Excellent||Good|Bad|Needs Restoration|Damaged)$");
     
     /**
      * Validates if a string text field is null or empty.
@@ -62,7 +61,14 @@ public class ValidationUtil {
     public static boolean isValidFloor(short floorNo) {
         return floorNo>=1 && floorNo<=5;
     }
-
+    /**
+     * Validates if the selected index is not -1 and something is selected.
+     * @param selectedIndex
+     * @return 
+     */
+    public static boolean isValidComboBoxSelection(int selectedIndex){
+        return selectedIndex != -1;
+    }
     /**
      * Validates if the room number is between 1 and 7 (inclusive).
      *

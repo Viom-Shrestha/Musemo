@@ -5,10 +5,12 @@ import com.musemo.model.ArtifactModel;
 import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Viom Shrestha
@@ -20,7 +22,7 @@ public class Musemo extends javax.swing.JFrame {
     private final ValidationUtil validationUtil;
     private final Color errorColor = new Color(255, 51, 0);
     private final Color greenColor = new Color(0, 255, 102);
-    
+
     /**
      * Creates new form Musemo
      */
@@ -83,6 +85,7 @@ public class Musemo extends javax.swing.JFrame {
         txtFldOrigin = new javax.swing.JTextField();
         txtFldRoom = new javax.swing.JTextField();
         txtFldFloor = new javax.swing.JTextField();
+        cmbBoxCondition = new javax.swing.JComboBox<>();
         btnAddArtifact = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
@@ -96,7 +99,6 @@ public class Musemo extends javax.swing.JFrame {
         lblErrorMsgCondition = new javax.swing.JLabel();
         lblErrorMsgFloor = new javax.swing.JLabel();
         lblErrorMsgRoomNo = new javax.swing.JLabel();
-        cmbBoxCondition = new javax.swing.JComboBox<>();
         btnBackToHome1 = new javax.swing.JButton();
         pnlLoadingScreen = new javax.swing.JPanel();
         lblloading = new javax.swing.JLabel();
@@ -223,8 +225,9 @@ public class Musemo extends javax.swing.JFrame {
 
         pnlAdminLoginScreen.setBackground(new java.awt.Color(1, 0, 59));
         pnlAdminLoginScreen.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        pnlAdminLoginScreen.setMaximumSize(new java.awt.Dimension(900, 600));
+        pnlAdminLoginScreen.setMaximumSize(new java.awt.Dimension(1300, 700));
         pnlAdminLoginScreen.setMinimumSize(new java.awt.Dimension(900, 600));
+        pnlAdminLoginScreen.setPreferredSize(new java.awt.Dimension(1300, 700));
 
         btnBackToHome.setBackground(new java.awt.Color(255, 255, 255));
         btnBackToHome.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -296,11 +299,11 @@ public class Musemo extends javax.swing.JFrame {
                                     .addGroup(pnlAdminLoginScreenLayout.createSequentialGroup()
                                         .addGap(15, 15, 15)
                                         .addComponent(jLabel2)))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlAdminLoginScreenLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lblLoginError, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(lblLoginError, javax.swing.GroupLayout.DEFAULT_SIZE, 326, Short.MAX_VALUE)))
+                .addGap(33, 33, 33)
                 .addComponent(lblLoginIcon))
         );
         pnlAdminLoginScreenLayout.setVerticalGroup(
@@ -446,7 +449,7 @@ public class Musemo extends javax.swing.JFrame {
         lblTabletitle.setText("Artifacts  Table");
 
         pnlForm.setBackground(new java.awt.Color(137, 136, 246));
-        pnlForm.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Artifact Form", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Poor Richard", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
+        pnlForm.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Artifact Form", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Poor Richard", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
         pnlForm.setMaximumSize(new java.awt.Dimension(1080, 960));
         pnlForm.setMinimumSize(new java.awt.Dimension(1080, 960));
         pnlForm.setPreferredSize(new java.awt.Dimension(900, 300));
@@ -532,6 +535,17 @@ public class Musemo extends javax.swing.JFrame {
             }
         });
 
+        cmbBoxCondition.setBackground(new java.awt.Color(0, 0, 0));
+        cmbBoxCondition.setForeground(new java.awt.Color(255, 255, 255));
+        cmbBoxCondition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Excellent", "Good", "Bad", "Needs Restoration", "Damaged" }));
+        cmbBoxCondition.setSelectedIndex(-1);
+        cmbBoxCondition.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Condition", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(255, 255, 255))); // NOI18N
+        cmbBoxCondition.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbBoxConditionActionPerformed(evt);
+            }
+        });
+
         btnAddArtifact.setBackground(new java.awt.Color(153, 255, 204));
         btnAddArtifact.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnAddArtifact.setForeground(new java.awt.Color(0, 0, 0));
@@ -545,7 +559,7 @@ public class Musemo extends javax.swing.JFrame {
         btnDelete.setBackground(new java.awt.Color(153, 255, 204));
         btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnDelete.setForeground(new java.awt.Color(0, 0, 0));
-        btnDelete.setText("Delete");
+        btnDelete.setText("Delete Artifact");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteActionPerformed(evt);
@@ -590,111 +604,117 @@ public class Musemo extends javax.swing.JFrame {
 
         lblErrorMsgRoomNo.setForeground(new java.awt.Color(255, 255, 255));
 
-        cmbBoxCondition.setBackground(new java.awt.Color(0, 0, 0));
-        cmbBoxCondition.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Excellent", "Good", "Bad", "Needs Restoration", "Damaged" }));
-        cmbBoxCondition.setSelectedIndex(-1);
-        cmbBoxCondition.setBorder(javax.swing.BorderFactory.createTitledBorder("Condition"));
-
         javax.swing.GroupLayout pnlFormLayout = new javax.swing.GroupLayout(pnlForm);
         pnlForm.setLayout(pnlFormLayout);
         pnlFormLayout.setHorizontalGroup(
             pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFormLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addContainerGap()
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlFormLayout.createSequentialGroup()
-                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFldArtifactId, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFldRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblErrorMsgArtifactId, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblErrorMsgRoomNo, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlFormLayout.createSequentialGroup()
-                                .addGap(64, 64, 64)
-                                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtFldArtifactName, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblErrorMsgArtifactName, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(40, 40, 40)
-                                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(lblErrorMsgArtifactType, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cmbBoxArtifactType, 0, 216, Short.MAX_VALUE))
-                                .addGap(45, 45, 45)
-                                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblErrorMsgCreator, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtFldCreator, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFormLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnlFormLayout.createSequentialGroup()
-                                        .addGap(198, 198, 198)
-                                        .addComponent(btnUpdate)
-                                        .addGap(76, 76, 76)
-                                        .addComponent(btnDelete)
-                                        .addGap(69, 69, 69)
-                                        .addComponent(btnClear))
-                                    .addGroup(pnlFormLayout.createSequentialGroup()
-                                        .addComponent(btnAddArtifact)
-                                        .addGap(389, 389, 389)))
-                                .addGap(62, 62, 62))))
-                    .addGroup(pnlFormLayout.createSequentialGroup()
-                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFldStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblErrorMsgStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(64, 64, 64)
-                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFldOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblErrorMsgOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFormLayout.createSequentialGroup()
                         .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblErrorMsgCondition, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbBoxCondition, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(45, 45, 45)
-                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblErrorMsgFloor, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFldFloor, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(51, Short.MAX_VALUE))
+                            .addGroup(pnlFormLayout.createSequentialGroup()
+                                .addComponent(txtFldCreator, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtFldStatus))
+                            .addComponent(lblErrorMsgArtifactName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlFormLayout.createSequentialGroup()
+                                .addComponent(txtFldArtifactId, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cmbBoxArtifactType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtFldArtifactName, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlFormLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(lblErrorMsgArtifactId, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(lblErrorMsgArtifactType, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlFormLayout.createSequentialGroup()
+                                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtFldOrigin, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                                    .addComponent(lblErrorMsgCreator, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblErrorMsgStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cmbBoxCondition, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(659, 659, 659))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFormLayout.createSequentialGroup()
+                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlFormLayout.createSequentialGroup()
+                                .addComponent(lblErrorMsgFloor, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblErrorMsgRoomNo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlFormLayout.createSequentialGroup()
+                                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(pnlFormLayout.createSequentialGroup()
+                                            .addComponent(lblErrorMsgOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(lblErrorMsgCondition, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlFormLayout.createSequentialGroup()
+                                            .addComponent(txtFldFloor, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(txtFldRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlFormLayout.createSequentialGroup()
+                                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(btnAddArtifact, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                                            .addComponent(btnClear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(617, 617, 617))))
         );
         pnlFormLayout.setVerticalGroup(
             pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFormLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(26, 26, 26)
+                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFldArtifactId, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbBoxArtifactType, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtFldArtifactId, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFldArtifactName)
-                    .addComponent(cmbBoxArtifactType)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFormLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(txtFldCreator, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblErrorMsgArtifactName, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblErrorMsgArtifactId, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblErrorMsgArtifactType, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblErrorMsgCreator, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblErrorMsgArtifactId, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblErrorMsgArtifactType, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtFldStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtFldOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtFldFloor, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(cmbBoxCondition))
+                .addComponent(txtFldArtifactName, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblErrorMsgArtifactName, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblErrorMsgStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblErrorMsgOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblErrorMsgCondition, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblErrorMsgFloor, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFldStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFldCreator, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblErrorMsgStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblErrorMsgCreator, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtFldOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlFormLayout.createSequentialGroup()
+                        .addComponent(cmbBoxCondition, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblErrorMsgOrigin, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblErrorMsgCondition, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtFldRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnAddArtifact, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtFldFloor, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFldRoom, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblErrorMsgRoomNo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblErrorMsgFloor, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblErrorMsgRoomNo, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddArtifact, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(289, 289, 289))
         );
 
         btnBackToHome1.setBackground(new java.awt.Color(255, 255, 255));
@@ -711,38 +731,33 @@ public class Musemo extends javax.swing.JFrame {
         pnlManageArtifacts.setLayout(pnlManageArtifactsLayout);
         pnlManageArtifactsLayout.setHorizontalGroup(
             pnlManageArtifactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblManageBojectsHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlManageArtifactsLayout.createSequentialGroup()
                 .addGroup(pnlManageArtifactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlManageArtifactsLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblTabletitle)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlManageArtifactsLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblManageBojectsHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(pnlManageArtifactsLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
                         .addGroup(pnlManageArtifactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(spTblObjects, javax.swing.GroupLayout.PREFERRED_SIZE, 1124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pnlForm, javax.swing.GroupLayout.PREFERRED_SIZE, 1124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)))
-                .addComponent(btnBackToHome1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                            .addComponent(lblTabletitle, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnlManageArtifactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(btnBackToHome1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(spTblObjects, javax.swing.GroupLayout.PREFERRED_SIZE, 805, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)))
+                .addComponent(pnlForm, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pnlManageArtifactsLayout.setVerticalGroup(
             pnlManageArtifactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlManageArtifactsLayout.createSequentialGroup()
                 .addComponent(lblManageBojectsHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(pnlManageArtifactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlManageArtifactsLayout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(btnBackToHome1))
-                    .addGroup(pnlManageArtifactsLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblTabletitle)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(spTblObjects, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnlForm, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addGroup(pnlManageArtifactsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTabletitle)
+                    .addComponent(btnBackToHome1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(spTblObjects, javax.swing.GroupLayout.PREFERRED_SIZE, 404, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 74, Short.MAX_VALUE))
+            .addComponent(pnlForm, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         spTblObjects.getAccessibleContext().setAccessibleParent(spTblObjects);
@@ -818,12 +833,10 @@ public class Musemo extends javax.swing.JFrame {
         // Check if username or password is empty
         if (username.isEmpty() || password.isEmpty()) {
             lblLoginError.setText("Please enter your username and password.");
-        } 
-        // Check if username and password are incorrect
+        } // Check if username and password are incorrect
         else if (!username.equals("v") || !password.equals("v")) {
             lblLoginError.setText("Username and password mismatch.");
-        } 
-        // If credentials are correct, proceed to load the main screen
+        } // If credentials are correct, proceed to load the main screen
         else {
             lblLoginError.setText(""); // Clear any previous error messages
             loadScreen("DashboardScreen"); // Load the main screen
@@ -847,96 +860,7 @@ public class Musemo extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFldArtifactIdActionPerformed
 
     private void btnAddArtifactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddArtifactActionPerformed
-        boolean isValid = true;
-        
-        // Validate Artifact ID
-        try{
-            isValid &= validateField(txtFldArtifactId, "Artifact ID", lblErrorMsgArtifactId, "Must be 3-digit number.",
-                    errorColor, greenColor, ValidationUtil.isValidObjectId(Integer.parseInt(txtFldArtifactId.getText()))
-            );
-        } catch(NumberFormatException e) {
-            isValid &= validateField(txtFldArtifactId, "Artifact ID", lblErrorMsgArtifactId, "Field cannot be empty",
-                    errorColor, greenColor, false
-            );
-        }
-
-        // Validate Artifact Name
-        isValid &= validateField(txtFldArtifactName, "Artifact Name", lblErrorMsgArtifactName, "Must contain only alphabets.",
-                errorColor, greenColor, ValidationUtil.isValidName(txtFldArtifactName.getText())
-        );
-        
-        // Validate Creator
-        isValid &= validateField(
-            txtFldCreator, "Creator", lblErrorMsgCreator, "Must contain only alphabets.",
-            errorColor, greenColor, ValidationUtil.isValidName(txtFldCreator.getText())
-        );
-
-        // Validate Status
-        isValid &= validateField(
-            txtFldStatus, "Status", lblErrorMsgStatus, "Must be Permanent or Temporary.",
-            errorColor, greenColor, ValidationUtil.isValidStatus(txtFldStatus.getText())
-        );
-
-        // Validate Origin
-        isValid &= validateField(
-            txtFldOrigin, "Origin", lblErrorMsgOrigin, "Must contain only alphabets.",
-            errorColor, greenColor, ValidationUtil.isValidName(txtFldOrigin.getText())
-        );
-
-        // Validate Floor
-        try{
-            isValid &= validateField(
-                txtFldFloor, "Floor", lblErrorMsgFloor, "Must be a number between 1 and 5.",
-                errorColor, greenColor, ValidationUtil.isValidFloor(Short.parseShort(txtFldFloor.getText()))
-            );
-        
-        } catch(NumberFormatException e) {
-            validateField(
-                txtFldFloor, "Floor", lblErrorMsgFloor, "Must be a valid number",
-                errorColor, greenColor, false
-            );
-        }
-
-        // Validate Room Number
-        try{
-            isValid &= validateField(
-                txtFldRoom, "Room Number", lblErrorMsgRoomNo, "Must be a number between 1 and 7.",
-                errorColor, greenColor, ValidationUtil.isValidRoom(Short.parseShort(txtFldRoom.getText()))
-            );
-        } catch(NumberFormatException e) {
-            validateField(
-                txtFldRoom, "Room Number", lblErrorMsgRoomNo, "Must be a valid number",
-                errorColor, greenColor, false
-            );
-        }
-        
-        if (isValid) {
-            // Create a ArtifactModel instance
-            ArtifactModel newArtifact = new ArtifactModel(
-                    Integer.parseInt(txtFldArtifactId.getText().trim()),
-                    txtFldArtifactName.getText().trim(),
-                    cmbBoxArtifactType.getSelectedItem().toString().trim(),
-                    txtFldCreator.getText().trim(),
-                    txtFldStatus.getText().trim(),
-                    txtFldOrigin.getText().trim(),
-                    cmbBoxCondition.getSelectedItem().toString().trim(),
-                    Short.parseShort(txtFldFloor.getText().trim()),
-                    Short.parseShort(txtFldRoom.getText().trim())                    
-            );
-
-            // Check for duplicate Object ID
-            if (checkDuplicateArtifact(newArtifact)) {
-                txtFldArtifactId.setBorder(createTitledBorder(errorColor, "Object ID"));
-                showDialogBox("Artifact with this ID already exists.", "Duplicate Entry!", JOptionPane.WARNING_MESSAGE);
-            } else {
-                // Add the Artifact if no duplicate is found
-                artifactList.add(newArtifact);
-                clearArtifactForm();
-                loadListToTable(artifactList);
-                txtFldArtifactId.setBorder(createTitledBorder(greenColor, "Object ID"));
-                showDialogBox("Artifact added successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
-            }
-        }
+        addArtifact();
     }//GEN-LAST:event_btnAddArtifactActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -953,7 +877,7 @@ public class Musemo extends javax.swing.JFrame {
     /**
      * Validates a single input field based on specific criteria and updates its
      * visual state.
-     * 
+     *
      * @param textField
      * @param fieldName
      * @param errorLbl
@@ -961,7 +885,7 @@ public class Musemo extends javax.swing.JFrame {
      * @param errorColor
      * @param successColor
      * @param isValidFormat
-     * @return 
+     * @return
      */
     private boolean validateField(JTextField textField, String fieldName, JLabel errorLbl, String errorMsg, Color errorColor, Color successColor, boolean isValidFormat) {
         if (ValidationUtil.isNullOrEmpty(textField.getText())) {
@@ -980,7 +904,25 @@ public class Musemo extends javax.swing.JFrame {
             return true;
         }
     }
-    
+
+    private boolean validateComboBox(JComboBox<?> comboBox, String fieldName, JLabel errorLbl, String errorMsg, Color errorColor, Color successColor, boolean isValidFormat) {
+        if (comboBox.getSelectedIndex() == -1) { // No valid selection
+            comboBox.setBorder(createTitledBorder(errorColor, fieldName));
+            errorLbl.setText(errorMsg);
+            errorLbl.setVisible(true);
+            return false;
+        } else if (!isValidFormat) {
+            comboBox.setBorder(createTitledBorder(errorColor, fieldName));
+            errorLbl.setText(errorMsg);
+            errorLbl.setVisible(true);
+            return false;
+        } else {
+            comboBox.setBorder(createTitledBorder(successColor, fieldName));
+            errorLbl.setVisible(false);
+            return true;
+        }
+    }
+
     /**
      * Creates a custom TitledBorder with specified color and title.
      *
@@ -998,7 +940,7 @@ public class Musemo extends javax.swing.JFrame {
                 color
         );
     }
-    
+
     private void txtFldArtifactNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFldArtifactNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFldArtifactNameActionPerformed
@@ -1024,7 +966,7 @@ public class Musemo extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFldFloorActionPerformed
 
     private void btnBackToHome1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackToHome1ActionPerformed
-       loadScreen("DashboardScreen");
+        loadScreen("DashboardScreen");
     }//GEN-LAST:event_btnBackToHome1ActionPerformed
 
     private void cmbBoxArtifactTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBoxArtifactTypeActionPerformed
@@ -1042,6 +984,10 @@ public class Musemo extends javax.swing.JFrame {
     private void btnBookNowPHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBookNowPHActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBookNowPHActionPerformed
+
+    private void cmbBoxConditionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBoxConditionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbBoxConditionActionPerformed
     /**
      * Initializes the layout of the application by setting up the CardLayout
      * and adding panels for different screens. Each panel is uniquely
@@ -1058,103 +1004,78 @@ public class Musemo extends javax.swing.JFrame {
         getContentPane().add(pnlAdminDashboardScreen, "DashboardScreen");
         getContentPane().add(pnlManageArtifacts, "ObjectManagementScreen");
 
-
         // Start with the loading screen
         loadScreen("LoadingScreen");
-    }   
+    }
+
     /**
-     * Initializes the Artifact data and Artifact Table.
-     * Adds some Initial data into the Object List.
+     * Initializes the Artifact data and Artifact Table. Adds some Initial data
+     * into the Object List.
      */
     private void initializaData() {
         artifactList = new LinkedList<>();
         // Registering sample objects
-        enterArtifact(new ArtifactModel(110, "Mona Lisa", "Painitng", "Leonardo da Vinci", "Permanent", "Italy", "Excellent", (short)1 ,(short)2));
-        enterArtifact(new ArtifactModel(140, "The Thinker", "Sculpture", "Auguste Robin", "Permanent", "France", "Good", (short)1 ,(short)5));
-        enterArtifact(new ArtifactModel(777, "Winged Victory", "Sculpture", "Unlnown", "Temporary", "Greece", "Damaged", (short)5 ,(short)7));
-        enterArtifact(new ArtifactModel(401, "Rosetta Stone", "Relic", "Ancient Egyptians", "Permanent", "Egypt", "Needs Restoration", (short)02 ,(short)1));
-        enterArtifact(new ArtifactModel(242, "Starry Night", "Painitng", "Vincent van Gogh", "Temporary", "Netherlands", "Excellent", (short)3 ,(short)2));        
+        enterArtifact(new ArtifactModel(110, "Mona Lisa", "Painitng", "Leonardo da Vinci", "Permanent", "Italy", "Excellent", (short) 1, (short) 2));
+        enterArtifact(new ArtifactModel(140, "The Thinker", "Sculpture", "Auguste Robin", "Permanent", "France", "Good", (short) 1, (short) 5));
+        enterArtifact(new ArtifactModel(777, "Winged Victory", "Sculpture", "Unlnown", "Temporary", "Greece", "Damaged", (short) 5, (short) 7));
+        enterArtifact(new ArtifactModel(401, "Rosetta Stone", "Relic", "Ancient Egyptians", "Permanent", "Egypt", "Needs Restoration", (short) 02, (short) 1));
+        enterArtifact(new ArtifactModel(242, "Starry Night", "Painitng", "Vincent van Gogh", "Temporary", "Netherlands", "Excellent", (short) 3, (short) 2));
     }
+
+    private void addArtifact() {
+        boolean isValid = validateFields();
+
+        if (isValid) {
+            // Create a ArtifactModel instance
+            ArtifactModel newArtifact = new ArtifactModel(
+                    Integer.parseInt(txtFldArtifactId.getText().trim()),
+                    txtFldArtifactName.getText().trim(),
+                    cmbBoxArtifactType.getSelectedItem().toString().trim(),
+                    txtFldCreator.getText().trim(),
+                    txtFldStatus.getText().trim(),
+                    txtFldOrigin.getText().trim(),
+                    cmbBoxCondition.getSelectedItem().toString().trim(),
+                    Short.parseShort(txtFldFloor.getText().trim()),
+                    Short.parseShort(txtFldRoom.getText().trim())
+            );
+
+            // Check for duplicate Object ID
+            if (checkDuplicateArtifact(newArtifact)) {
+                txtFldArtifactId.setBorder(createTitledBorder(errorColor, "Object ID"));
+                showDialogBox("Artifact with this ID already exists.", "Duplicate Entry!", JOptionPane.WARNING_MESSAGE);
+            } else {
+                // Add the Artifact if no duplicate is found
+                artifactList.add(newArtifact);
+                clearArtifactForm();
+                loadListToTable(artifactList);
+                txtFldArtifactId.setBorder(createTitledBorder(greenColor, "Object ID"));
+                showDialogBox("Artifact added successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }
+
     /**
-     * Method to add Artifact data to table from List. 
-     * @param object 
+     * Method to add Artifact data to table from List.
+     *
+     * @param object
      */
-    private void enterArtifact(ArtifactModel artifact){
+    private void enterArtifact(ArtifactModel artifact) {
         artifactList.add(artifact);
-        
+
         DefaultTableModel model = (DefaultTableModel) tblArtifact.getModel();
         model.addRow(new Object[]{
             artifact.getArtifactID(), artifact.getArtifactName(), artifact.getArtifactType(),
-            artifact.getCreator(), artifact.getStatus(),artifact.getOrigin(), 
+            artifact.getCreator(), artifact.getStatus(), artifact.getOrigin(),
             artifact.getCondition(), artifact.getFloor(), artifact.getRoomNo()
         });
     }
-    private void updateArtifact(){
-        // Get the selected artifact ID
-        int artifactId = Integer.parseInt(txtFldArtifactId.getText());
-        boolean isValid = true;
-        // Validate the entered ID
-        try{
-            isValid &= validateField(txtFldArtifactId, "Artifact ID", lblErrorMsgArtifactId, "Must be 3-digit number.",
-                    errorColor, greenColor, ValidationUtil.isValidObjectId(Integer.parseInt(txtFldArtifactId.getText()))
-            );
-        } catch(NumberFormatException e) {
-            isValid &= validateField(txtFldArtifactId, "Artifact ID", lblErrorMsgArtifactId, "Field cannot be empty",
-                    errorColor, greenColor, false
-            );
-        }    
 
-        // Validate Artifact Name
-        isValid &= validateField(txtFldArtifactName, "Artifact Name", lblErrorMsgArtifactName, "Must contain only alphabets.",
-                errorColor, greenColor, ValidationUtil.isValidName(txtFldArtifactName.getText())
-        );
-        
-        // Validate Creator
-        isValid &= validateField(
-            txtFldCreator, "Creator", lblErrorMsgCreator, "Must contain only alphabets.",
-            errorColor, greenColor, ValidationUtil.isValidName(txtFldCreator.getText())
-        );
+    private void updateArtifact() {
+        boolean isValid = validateFields();
 
-        // Validate Status
-        isValid &= validateField(
-            txtFldStatus, "Status", lblErrorMsgStatus, "Must be Permanent or Temporary.",
-            errorColor, greenColor, ValidationUtil.isValidStatus(txtFldStatus.getText())
-        );
-
-        // Validate Origin
-        isValid &= validateField(
-            txtFldOrigin, "Origin", lblErrorMsgOrigin, "Must contain only alphabets.",
-            errorColor, greenColor, ValidationUtil.isValidName(txtFldOrigin.getText())
-        );
-
-        // Validate Floor
-        try{
-            isValid &= validateField(
-                txtFldFloor, "Floor", lblErrorMsgFloor, "Must be a number between 1 and 5.",
-                errorColor, greenColor, ValidationUtil.isValidFloor(Short.parseShort(txtFldFloor.getText()))
-            );
-        
-        } catch(NumberFormatException e) {
-            validateField(
-                txtFldFloor, "Floor", lblErrorMsgFloor, "Must be a valid number",
-                errorColor, greenColor, false
-            );
-        }
-
-        // Validate Room Number
-        try{
-            isValid &= validateField(
-                txtFldRoom, "Room Number", lblErrorMsgRoomNo, "Must be a number between 1 and 7.",
-                errorColor, greenColor, ValidationUtil.isValidRoom(Short.parseShort(txtFldRoom.getText()))
-            );
-        } catch(NumberFormatException e) {
-            validateField(
-                txtFldRoom, "Room Number", lblErrorMsgRoomNo, "Must be a valid number",
-                errorColor, greenColor, false
-            );
-        }
-        
-        if(isValid){
+        if (isValid) {
+            // Get the selected artifact ID
+            int artifactId = Integer.parseInt(txtFldArtifactId.getText());
             for (ArtifactModel artifact : artifactList) { // artifactList is a List<Artifact>
                 if (artifact.getArtifactID() == artifactId) {
                     artifact.setArtifactName(txtFldArtifactName.getText());
@@ -1166,36 +1087,36 @@ public class Musemo extends javax.swing.JFrame {
                     artifact.setFloor(Short.parseShort(txtFldFloor.getText()));
                     artifact.setRoomNo(Short.parseShort(txtFldRoom.getText()));
                     loadListToTable(artifactList);
-                }               
-                else{
-                    showDialogBox("Artifact not found or update failed.", "Error", JOptionPane.ERROR_MESSAGE);   
+                } else {
+                    showDialogBox("Artifact not found or update failed.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
     }
+
     /**
      * Method to delete the artifact with entered id.
      */
     private void deleteArtifact() {
-        // Get the selected artifact ID
-        int artifactId = Integer.parseInt(txtFldArtifactId.getText());
         boolean isValid = true;
         // Validate if an ID is provided
-        try{
+        try {
             isValid &= validateField(txtFldArtifactId, "Artifact ID", lblErrorMsgArtifactId, "Must be 3-digit number.",
                     errorColor, greenColor, ValidationUtil.isValidObjectId(Integer.parseInt(txtFldArtifactId.getText()))
             );
-        } catch(NumberFormatException e) {
-            isValid &= validateField(txtFldArtifactId, "Artifact ID", lblErrorMsgArtifactId, "Field cannot be empty",
+        } catch (NumberFormatException e) {
+            isValid &= validateField(txtFldArtifactId, "Artifact ID", lblErrorMsgArtifactId, "Enter the Id of the Artifact to be deleted!",
                     errorColor, greenColor, false
             );
         }
-        if(isValid){
+        if (isValid) {
+            // Get the selected artifact ID
+            int artifactId = Integer.parseInt(txtFldArtifactId.getText());
             // Confirm deletion with the user
-            int confirm = JOptionPane.showConfirmDialog(this, 
-                "Are you sure you want to delete the object with ID: " + artifactId + "?", 
-                "Confirm Deletion", 
-                JOptionPane.YES_NO_OPTION);
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "Are you sure you want to delete the object with ID: " + artifactId + "?",
+                    "Confirm Deletion",
+                    JOptionPane.YES_NO_OPTION);
 
             if (confirm == JOptionPane.YES_OPTION) {
                 // Perform deletion from the data
@@ -1213,8 +1134,9 @@ public class Musemo extends javax.swing.JFrame {
 
     /**
      * Method to delete artifact from list
+     *
      * @param artifactId
-     * @return 
+     * @return
      */
     private boolean deleteFromList(int artifactId) {
         for (ArtifactModel artifact : artifactList) { // artifactList is a List<Artifact>
@@ -1235,6 +1157,7 @@ public class Musemo extends javax.swing.JFrame {
     private void loadScreen(String screenName) {
         cardLayout.show(getContentPane(), screenName);
     }
+
     /**
      * Simulates the loading progress using a SwingWorker thread. Updates a
      * progress bar incrementally and switches to the login screen upon
@@ -1245,7 +1168,7 @@ public class Musemo extends javax.swing.JFrame {
             @Override
             protected Void doInBackground() throws Exception {
                 for (int i = 0; i <= 100; i++) {
-                    Thread.sleep(100); // Simulated delay for progress bar
+                    Thread.sleep(10); // Simulated delay for progress bar
                     publish(i); // Publish progress
                 }
                 return null;
@@ -1264,10 +1187,10 @@ public class Musemo extends javax.swing.JFrame {
         };
         worker.execute(); // Start the worker thread
     }
-    
+
     /**
-     * Populates the JTable with the current list of Artifact records. 
-     * And clears the table contents before adding
+     * Populates the JTable with the current list of Artifact records. And
+     * clears the table contents before adding
      */
     private void loadListToTable(List<ArtifactModel> artifactList) {
         DefaultTableModel model = (DefaultTableModel) tblArtifact.getModel();
@@ -1285,23 +1208,23 @@ public class Musemo extends javax.swing.JFrame {
             object.getOrigin(),
             object.getCondition(),
             object.getFloor(),
-            object.getRoomNo(),
-
-        }));
+            object.getRoomNo(),}));
     }
-    
+
     /**
      * Method to show dialogue box with entered message, title and message type.
+     *
      * @param message
      * @param title
-     * @param messageType 
+     * @param messageType
      */
     private void showDialogBox(String message, String title, int messageType) {
         JOptionPane.showMessageDialog(this, message, title, messageType);
     }
-    
+
     /**
      * Method to check if duplicate object is entered.
+     *
      * @param object ObjectModel object to check for duplicates
      * @return true id duplicate is found
      */
@@ -1310,7 +1233,7 @@ public class Musemo extends javax.swing.JFrame {
                 .anyMatch(existingObject
                         -> existingObject.getArtifactID() == artifact.getArtifactID());
     }
-    
+
     /**
      * Method to clear all the entered data from the text fields all at once
      */
@@ -1325,6 +1248,82 @@ public class Musemo extends javax.swing.JFrame {
         txtFldFloor.setText("");
         txtFldRoom.setText("");
     }
+
+    private boolean validateFields() {
+        boolean isValid = true;
+        // Validate Artifact ID
+        try {
+            isValid &= validateField(txtFldArtifactId, "Artifact ID", lblErrorMsgArtifactId, "Must be 3-digit number.",
+                    errorColor, greenColor, ValidationUtil.isValidObjectId(Integer.parseInt(txtFldArtifactId.getText()))
+            );
+        } catch (NumberFormatException e) {
+            isValid &= validateField(txtFldArtifactId, "Artifact ID", lblErrorMsgArtifactId, "Field cannot be empty",
+                    errorColor, greenColor, false
+            );
+        }
+
+        // Validate Artifact Name
+        isValid &= validateField(txtFldArtifactName, "Artifact Name", lblErrorMsgArtifactName, "Must contain only alphabets.",
+                errorColor, greenColor, ValidationUtil.isValidName(txtFldArtifactName.getText())
+        );
+
+        // Validate Artifact Type
+        isValid &= validateComboBox(
+                cmbBoxArtifactType, "Artifact Type", lblErrorMsgArtifactType, "Must Select Something.",
+                errorColor, greenColor, ValidationUtil.isValidComboBoxSelection(cmbBoxArtifactType.getSelectedIndex())
+        );
+
+        // Validate Creator
+        isValid &= validateField(
+                txtFldCreator, "Creator", lblErrorMsgCreator, "Must contain only alphabets.",
+                errorColor, greenColor, ValidationUtil.isValidName(txtFldCreator.getText())
+        );
+
+        // Validate Status
+        isValid &= validateField(
+                txtFldStatus, "Status", lblErrorMsgStatus, "Must be Permanent or Temporary.",
+                errorColor, greenColor, ValidationUtil.isValidStatus(txtFldStatus.getText())
+        );
+
+        // Validate Origin
+        isValid &= validateField(
+                txtFldOrigin, "Origin", lblErrorMsgOrigin, "Must contain only alphabets.",
+                errorColor, greenColor, ValidationUtil.isValidName(txtFldOrigin.getText())
+        );
+        // Validate Condition
+        isValid &= validateComboBox(
+                cmbBoxCondition, "Condition", lblErrorMsgCondition, "Must Select Something.",
+                errorColor, greenColor, ValidationUtil.isValidComboBoxSelection(cmbBoxCondition.getSelectedIndex())
+        );
+        // Validate Floor
+        try {
+            isValid &= validateField(
+                    txtFldFloor, "Floor", lblErrorMsgFloor, "Must be a number between 1 and 5.",
+                    errorColor, greenColor, ValidationUtil.isValidFloor(Short.parseShort(txtFldFloor.getText()))
+            );
+
+        } catch (NumberFormatException e) {
+            validateField(
+                    txtFldFloor, "Floor", lblErrorMsgFloor, "Must be a valid number",
+                    errorColor, greenColor, false
+            );
+        }
+
+        // Validate Room Number
+        try {
+            isValid &= validateField(
+                    txtFldRoom, "Room Number", lblErrorMsgRoomNo, "Must be a number between 1 and 7.",
+                    errorColor, greenColor, ValidationUtil.isValidRoom(Short.parseShort(txtFldRoom.getText()))
+            );
+        } catch (NumberFormatException e) {
+            validateField(
+                    txtFldRoom, "Room Number", lblErrorMsgRoomNo, "Must be a valid number",
+                    errorColor, greenColor, false
+            );
+        }
+        return isValid;
+    }
+
     /**
      * @param args the command line arguments
      */
