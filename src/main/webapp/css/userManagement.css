@@ -124,14 +124,10 @@ body {
 	padding: 30px;
 }
 
-.page-header {
-	margin-bottom: 30px;
-}
-
-.page-header h1 {
-	font-size: 32px;
-	font-weight: 500;
-	color: var(--text-color);
+.page-title {
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 24px;
 }
 
 /* Search and Filter */
@@ -179,29 +175,6 @@ body {
 	background-position: calc(100% - 15px) center;
 }
 
-/* Pagination Controls */
-.pagination-controls {
-	display: flex;
-	justify-content: flex-end;
-	gap: 10px;
-	margin-bottom: 20px;
-}
-
-.pagination-btn {
-	width: 40px;
-	height: 40px;
-	border-radius: 50%;
-	background-color: #000;
-	color: white;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border: none;
-	cursor: pointer;
-	font-size: 18px;
-}
-
-/* User Table */
 /* User Table */
 .user-table {
 	width: 100%;
@@ -227,11 +200,11 @@ body {
 	background-color: var(--hover-color);
 }
 
-.image-cell img{
-    width: 80px;
-    height: auto;
-    object-fit: cover;
-    border-radius: 6px; /* Optional: for a cleaner look */
+.image-cell img {
+	width: 80px;
+	height: auto;
+	object-fit: cover;
+	border-radius: 6px; /* Optional: for a cleaner look */
 }
 
 .doc-icon {

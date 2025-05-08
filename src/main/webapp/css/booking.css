@@ -1,10 +1,9 @@
 @charset "UTF-8";
 
 :root {
-	--primary-color: #0a4b6c;
-	--secondary-color: #29a7bd;
+	--primary-color: #003955;
+	--secondary-color: #003955;
 	--accent-color: #f8f9fa;
-	--text-color: #333;
 	--light-text: #f8f9fa;
 }
 
@@ -17,8 +16,11 @@
 
 body {
 	background-color: #fff;
-	color: var(--text-color);
+	color: white;
 	line-height: 1.6;
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .container {
@@ -60,13 +62,14 @@ header {
 
 .booking-header h2 {
 	font-size: 32px;
-	color: #000;
+	color: #ffffff;
 	font-weight: 500;
 }
 
 .booking-form {
 	background-color: var(--secondary-color);
 	padding: 20px;
+	color:white;
 }
 
 .form-row {
@@ -88,7 +91,7 @@ header {
 	display: block;
 	margin-bottom: 8px;
 	font-size: 18px;
-	color: #000;
+	color: white;
 }
 
 .form-control {
@@ -97,7 +100,7 @@ header {
 	border: 1px solid #000;
 	border-radius: 4px;
 	background-color: var(--secondary-color);
-	color: #000;
+	color:white;
 	font-size: 16px;
 	appearance: none;
 }
@@ -171,7 +174,6 @@ header {
 
 /* Footer */
 footer {
-	background-color: var(--primary-color);
 	color: var(--light-text);
 	padding: 15px 0;
 	text-align: center;

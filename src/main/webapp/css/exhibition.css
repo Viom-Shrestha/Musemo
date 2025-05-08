@@ -25,6 +25,13 @@ body {
 	position: relative;
 }
 
+.search-info {
+	text-align: center;
+	margin: 10px 0;
+	font-size: 1.1em;
+	color: #ffffff;
+}
+
 .search-input {
 	width: 100%;
 	padding: 8px 15px 8px 35px;
@@ -109,6 +116,12 @@ body {
 
 .view-more-btn:hover {
 	background-color: #1a9089;
+}
+
+footer {
+	color: white;
+	padding: 15px 0;
+	text-align: center;
 }
 
 /* Responsive adjustments */

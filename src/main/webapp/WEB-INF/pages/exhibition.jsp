@@ -19,38 +19,51 @@
 </head>
 <body>
 	<jsp:include page="header.jsp" />
-	<!-- Search and Filter Section -->
 	<div class="search-section">
-		<div class="search-bar">
+		<form method="get" action="${contextPath}/exhibition"
+			class="search-bar">
 			<i class="fa-solid fa-search search-icon"></i> <input type="text"
-				class="search-input" placeholder="Search">
-		</div>
+				name="keyword" class="search-input" placeholder="Search"
+				value="${param.keyword}">
+		</form>
 	</div>
+
+	<c:if test="${not empty param.keyword}">
+		<div class="search-info">
+			<p>
+				Search results for: "<strong>${param.keyword}</strong>"
+			</p>
+		</div>
+	</c:if>
+
 
 	<!-- Gallery Grid -->
 	<div class="gallery-container">
-    <c:choose>
-        <c:when test="${not empty exhibition}">
-            <c:forEach var="exhibition" items="${exhibition}">
-                <div class="exhibition-card">
-                    <div class="card-image">
-                        <img src="${contextPath}/resources/images/exhibition/${exhibition.exhibitionImage}" 
-                             alt="${exhibition.exhibitionTitle}">
-                    </div>
-                    <div class="card-content">
-                        <h3 class="card-title">${exhibition.exhibitionTitle}</h3>
-                        <p class="card-description">${exhibition.exhibitionDescription}</p>
-                        <a href="${contextPath}/exhibitionDetails?id=${exhibition.exhibitionId}" class="view-more-btn">View More</a>
-                    </div>
-                </div>
-            </c:forEach>
-        </c:when>
-        <c:otherwise>
-            <p>No exhibitions found.</p>
-        </c:otherwise>
-    </c:choose>
-</div>
-	
+		<c:choose>
+			<c:when test="${not empty exhibition}">
+				<c:forEach var="exhibition" items="${exhibition}">
+					<div class="exhibition-card">
+						<div class="card-image">
+							<img
+								src="${contextPath}/resources/images/exhibition/${exhibition.exhibitionImage}"
+								alt="${exhibition.exhibitionTitle}">
+						</div>
+						<div class="card-content">
+							<h3 class="card-title">${exhibition.exhibitionTitle}</h3>
+							<p class="card-description">${exhibition.exhibitionDescription}</p>
+							<a
+								href="${contextPath}/exhibitionDetails?id=${exhibition.exhibitionId}"
+								class="view-more-btn">View More</a>
+						</div>
+					</div>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<p>No exhibitions found.</p>
+			</c:otherwise>
+		</c:choose>
+	</div>
+
 	<jsp:include page="footer.jsp" />
 </body>
 </html>

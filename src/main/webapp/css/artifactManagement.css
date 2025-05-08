@@ -1,23 +1,5 @@
 @charset "UTF-8";
 
-:root {
-	--primary-color: #26a0b7;
-	--sidebar-color: #26a0b7;
-	--text-color: #333;
-	--light-text: #f8f9fa;
-	--border-color: #ddd;
-	--hover-color: #f5f5f5;
-	--primary: #1a8ba0;
-	--primary-dark: #0c6b7e;
-	--secondary: #f7d44c;
-	--light: #f8f9fa;
-	--dark: #1c2b36;
-	--success: #28a745;
-	--info: #17a2b8;
-	--warning: #ffc107;
-	--danger: #dc3545;
-}
-
 * {
 	margin: 0;
 	padding: 0;
@@ -28,14 +10,14 @@
 body {
 	display: flex;
 	min-height: 100vh;
+	background-color: #f4f4f9;
 }
 
 /* Sidebar */
 .sidebar {
 	width: 260px;
 	height: 100vh;
-	background: linear-gradient(to bottom, var(--primary),
-		var(--primary-dark));
+	background: linear-gradient(to bottom, #1a8ba0, #0c6b7e);
 	color: white;
 	position: fixed;
 	padding-top: 20px;
@@ -51,14 +33,14 @@ body {
 	transition: all 0.3s;
 	margin: 4px 10px;
 	border-radius: 8px;
-	color: white; /* Added color white for link text */
-	text-decoration: none; /* Remove underline */
+	color: white;
+	text-decoration: none;
 }
 
 .sidebar .menu-item:hover, .sidebar .menu-item.active {
 	background-color: rgba(255, 255, 255, 0.1);
-	text-decoration: none; /* Keep no underline on hover */
-	color: white; /* Maintain white color on hover */
+	color: white;
+	text-decoration: none;
 }
 
 .logo-container {
@@ -72,7 +54,7 @@ body {
 .logo {
 	width: 40px;
 	height: 40px;
-	background-color: var(--secondary);
+	background-color: #f7d44c;
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
@@ -81,7 +63,7 @@ body {
 }
 
 .logo i {
-	color: var(--primary-dark);
+	color: #0c6b7e;
 	font-size: 20px;
 }
 
@@ -114,13 +96,13 @@ body {
 	font-size: 16px;
 	font-weight: 500;
 }
-.main-content {
-    flex: 1;
-    padding: 24px;
-    margin-left: 260px; /* Add this line */
-    overflow: auto;
-}
 
+.main-content {
+	flex: 1;
+	padding: 24px;
+	margin-left: 260px;
+	overflow: auto;
+}
 
 .page-title {
 	font-size: 24px;
@@ -128,105 +110,92 @@ body {
 	margin-bottom: 24px;
 }
 
-.search-bar-container {
+/* Search and Filter */
+.search-filter {
 	display: flex;
-	justify-content: space-between;
-	margin-bottom: 16px;
-}
-
-.search-bar {
-	position: relative;
-	width: 400px;
+	gap: 15px;
+	margin-bottom: 25px;
 }
 
 .search-input {
-	width: 100%;
-	padding: 8px 8px 8px 35px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-}
-
-.search-icon {
-	position: absolute;
-	left: 10px;
-	top: 50%;
-	transform: translateY(-50%);
-	color: #888;
-}
-
-.filter-controls {
-	display: flex;
-	gap: 8px;
-}
-
-.search-by {
+	flex: 1;
 	position: relative;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	padding: 8px 30px 8px 10px;
-	appearance: none;
-	background-color: white;
 }
 
-.dropdown-icon {
+.search-input input {
+	width: 100%;
+	padding: 12px 12px 12px 40px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-size: 16px;
+}
+
+.search-input i {
 	position: absolute;
-	right: 10px;
+	left: 15px;
 	top: 50%;
 	transform: translateY(-50%);
-	pointer-events: none;
+	color: #999;
 }
 
-.sort-button {
-	border: 1px solid #ccc;
-	background: white;
+.filter-select {
+	width: 250px;
+}
+
+.filter-select select {
+	width: 100%;
+	padding: 12px;
+	border: 1px solid #ddd;
 	border-radius: 4px;
-	width: 40px;
-	height: 40px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	cursor: pointer;
+	font-size: 16px;
+	appearance: none;
+	background-repeat: no-repeat;
+	background-position: calc(100% - 15px) center;
 }
 
+/* Table Styles */
 .artifact-table {
 	width: 100%;
 	border-collapse: collapse;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
+	background-color: #fff;
+	border-radius: 10px;
+	overflow: hidden;
 }
 
 .artifact-table th, .artifact-table td {
-	border: 1px solid #ddd;
-	padding: 8px;
+	padding: 12px 15px;
 	text-align: left;
-	color: var(--text-color);
+	border-bottom: 1px solid #eee;
+	color: #333;
 }
 
 .artifact-table th {
-	background-color: #f5f5f5;
-	background-color: var(--light); /* was #f5f5f5 */
-	color: var(--dark);
+	background-color: #1a8ba0;
+	color: white;
 }
 
 .artifact-table tr:hover {
 	background-color: #f9f9f9;
 }
 
-.artifact-image {
-	width: 32px;
-	height: 32px;
-	background-color: #ddd;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
+/* Unified Action Buttons */
 .action-buttons {
 	display: flex;
 	gap: 8px;
 }
 
-.edit-button,
-.delete-button {
+.action-buttons a {
+	color: #2980b9;
+	text-decoration: none;
+	font-size: 1.2em;
+}
+
+.action-buttons .delete-button {
+	color: #e74c3c;
+}
+
+.edit-button, .delete-button {
 	font-size: 14px;
 	padding: 6px 10px;
 	border-radius: 4px;
@@ -241,24 +210,129 @@ body {
 	background-color: rgba(204, 0, 0, 0.1);
 }
 
+.image-cell img {
+	width: 80px;
+	height: auto;
+	object-fit: cover;
+	border-radius: 6px;
+}
 
-.add-artifact-button {
-	background-color: #4287f5;
-	color: white;
+/* Form Styles */
+.form-container {
+	background: #26a0b7;
+	padding: 25px;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+	max-width: 900px;
+	margin: 0 auto;
+}
+
+.form-container h2 {
+	margin-bottom: 20px;
+}
+
+.artifact-form .form-group {
+	margin-bottom: 15px;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+.artifact-form .form-row {
+	display: flex;
+	gap: 20px;
+}
+
+.artifact-form label {
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.artifact-form input[type="text"], .artifact-form input[type="file"],
+	.artifact-form textarea {
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	font-size: 14px;
+}
+/* Select Dropdown Styling */
+.artifact-form select {
+	width: 100%;
+	padding: 10px 12px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	background-color: #fff;
+	font-size: 14px;
+	color: #333;
+	appearance: none;
+	background-repeat: no-repeat;
+	background-position: right 10px center;
+	background-size: 12px;
+}
+
+.artifact-form select:focus {
+	border-color: #3498db;
+	outline: none;
+	box-shadow: 0 0 4px rgba(52, 152, 219, 0.4);
+}
+
+/* Form Buttons */
+.form-buttons {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+	margin-top: 20px;
+}
+
+.clear-button, .add-button, .update-button, .cancel-button {
+	padding: 10px 20px;
 	border: none;
-	padding: 8px 16px;
-	border-radius: 4px;
+	border-radius: 6px;
 	cursor: pointer;
-	float: right;
+	font-weight: bold;
 }
 
-.add-artifact-button:hover {
-	background-color: #2d6ac9;
+.clear-button {
+	background-color: #e74c3c;
+	color: white;
 }
 
-.image-cell img{
-    width: 80px;
-    height: auto;
-    object-fit: cover;
-    border-radius: 6px; /* Optional: for a cleaner look */
+.add-button {
+	background-color: #28a745;
+	color: white;
+}
+
+.update-button {
+	background-color: #8080ff;
+	color: white;
+}
+
+.cancel-button {
+	background-color: #dc3545;
+	color: white;
+}
+
+.form-messages {
+	margin-top: 1rem;
+	text-align: center;
+}
+
+.error-message {
+	color: #d9534f;
+	background-color: #f8d7da;
+	border: 1px solid #f5c6cb;
+	padding: 10px;
+	border-radius: 8px;
+	margin: 10px 0;
+	font-weight: bold;
+}
+
+.success-message {
+	color: #155724;
+	background-color: #d4edda;
+	border: 1px solid #c3e6cb;
+	padding: 10px;
+	border-radius: 8px;
+	margin: 10px 0;
+	font-weight: bold;
 }
