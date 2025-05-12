@@ -43,7 +43,7 @@ public class ArtifactManagementController extends HttpServlet {
 
 		List<ArtifactModel> artifacts;
 		if (keyword != null && searchBy != null && !keyword.trim().isEmpty()) {
-			artifacts = service.searchArtifacts(searchBy, keyword);
+			artifacts = service.searchArtifactByFilter(searchBy, keyword);
 		} else {
 			artifacts = service.getAllArtifacts();
 		}

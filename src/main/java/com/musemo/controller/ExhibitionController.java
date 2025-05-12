@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.musemo.model.ExhibitionModel;
-import com.musemo.service.ExhibitionService;
+import com.musemo.service.ExhibitionManagementService;
 
 /**
  * @author Viom Shrestha
@@ -17,11 +17,11 @@ import com.musemo.service.ExhibitionService;
 @WebServlet(asyncSupported = true, urlPatterns = { "/exhibition" })
 public class ExhibitionController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ExhibitionService exhibitionService;
+	private ExhibitionManagementService exhibitionService;
 
 	@Override
 	public void init() throws ServletException {
-		exhibitionService = new ExhibitionService();
+		exhibitionService = new ExhibitionManagementService();
 	}
 
 	@Override

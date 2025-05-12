@@ -30,7 +30,7 @@ public class HomeController extends HttpServlet {
 		
 		try {
 			int artifactCount = homeService.getArtifactCount();
-			int visitorCountToday = homeService.getVisitorCountToday();
+			int visitorCountToday = homeService.getVisitorCount();
 			int bookingCountToday = homeService.getBookingCountToday();
 			List<ExhibitionModel> featuredExhibitions = homeService.getFeaturedExhibitions();
 			List<ArtifactModel> featuredArtifacts = homeService.getFeaturedArtifacts();

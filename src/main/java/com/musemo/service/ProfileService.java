@@ -211,4 +211,54 @@ public class ProfileService {
 		}
 	}
 
+	public UserModel getAdmin() {
+		String sql = "SELECT username, password, fullName, email, contact FROM user WHERE role='Admin'";
+		try (PreparedStatement ps = dbConn.prepareStatement(sql)) {
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				UserModel admin = new UserModel();
+				admin.setUsername(rs.getString("username"));
+				admin.setPassword(rs.getString("password"));
+				admin.setFullName(rs.getString("fullName"));
+				admin.setEmail(rs.getString("email"));
+				admin.setContact(rs.getString("contact"));
+				return admin;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public boolean updateAdminCredentials(UserModel admin) {
+		String sql = "UPDATE user SET fullName = ?, username = ?, password = ?, email = ?, contact = ? WHERE role = 'Admin'";
+
+		try (PreparedStatement ps = dbConn.prepareStatement(sql)) {
+			ps.setString(1, admin.getFullName());
+			ps.setString(2, admin.getUsername());
+
+			// Handle password logic
+			if (admin.getPassword() != null && !admin.getPassword().isEmpty()) {
+				ps.setString(3, admin.getPassword()); // Password is already encrypted in the controller
+			} else {
+				// Fetch the existing password if not provided
+				UserModel existing = getAdmin();
+				if (existing == null) {
+					System.out.println("Existing admin not found.");
+					return false;
+				}
+				ps.setString(3, existing.getPassword());
+			}
+
+			// Set email and contact fields
+			ps.setString(4, admin.getEmail());
+			ps.setString(5, admin.getContact());
+
+			return ps.executeUpdate() > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 }

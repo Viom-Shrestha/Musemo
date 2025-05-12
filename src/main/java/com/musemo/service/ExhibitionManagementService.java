@@ -20,45 +20,54 @@ public class ExhibitionManagementService {
 	}
 
 	public List<ExhibitionModel> getAllExhibitions() {
-		List<ExhibitionModel> exhibitionList = new ArrayList<>();
-		String sql = "SELECT exhibitionId, exhibitionTitle, exhibitionDescription, startDate, endDate, exhibitionImage FROM exhibition";
+		List<ExhibitionModel> exhibitions = new ArrayList<>();
+		String query = "SELECT * FROM exhibition"; // Adjust table name if needed
 
-		try (PreparedStatement ps = dbConn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+		try (Connection conn = DbConfig.getDbConnection();
+				PreparedStatement ps = conn.prepareStatement(query);
+				ResultSet rs = ps.executeQuery()) {
+
 			while (rs.next()) {
-				ExhibitionModel exhibition = new ExhibitionModel();
-				exhibition.setExhibitionId(rs.getInt("exhibitionId"));
-				exhibition.setExhibitionTitle(rs.getString("exhibitionTitle"));
-				exhibition.setExhibitionDescription(rs.getString("exhibitionDescription"));
-				exhibition.setStartDate(rs.getDate("startDate"));
-				exhibition.setEndDate(rs.getDate("endDate"));
-				exhibition.setExhibitionImage(rs.getString("exhibitionImage"));
-				exhibitionList.add(exhibition);
+				ExhibitionModel e = new ExhibitionModel();
+				e.setExhibitionId(rs.getInt("exhibitionId"));
+				e.setExhibitionTitle(rs.getString("exhibitionTitle"));
+				e.setExhibitionDescription(rs.getString("exhibitionDescription"));
+				e.setExhibitionImage(rs.getString("exhibitionImage"));
+				exhibitions.add(e);
 			}
-		} catch (SQLException e) {
+
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return exhibitionList;
+
+		return exhibitions;
 	}
 
-	public ExhibitionModel getExhibitionById(int exhibitionId) {
-		String sql = "SELECT exhibitionId, exhibitionTitle, exhibitionDescription, startDate, endDate, exhibitionImage FROM exhibition WHERE exhibitionId = ?";
-		try (PreparedStatement ps = dbConn.prepareStatement(sql)) {
-			ps.setInt(1, exhibitionId);
-			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				ExhibitionModel exhibition = new ExhibitionModel();
-				exhibition.setExhibitionId(rs.getInt("exhibitionId"));
-				exhibition.setExhibitionTitle(rs.getString("exhibitionTitle"));
-				exhibition.setExhibitionDescription(rs.getString("exhibitionDescription"));
-				exhibition.setStartDate(rs.getDate("startDate"));
-				exhibition.setEndDate(rs.getDate("endDate"));
-				exhibition.setExhibitionImage(rs.getString("exhibitionImage"));
-				return exhibition;
+	public ExhibitionModel getExhibitionById(int i) {
+		ExhibitionModel exhibition = null;
+		String exhibitionQuery = "SELECT * FROM exhibition WHERE exhibitionId = ?";
+
+		try (Connection conn = DbConfig.getDbConnection()) {
+
+			// Fetch exhibition details
+			try (PreparedStatement stmt = conn.prepareStatement(exhibitionQuery)) {
+				stmt.setInt(1, i);
+				ResultSet rs = stmt.executeQuery();
+				if (rs.next()) {
+					exhibition = new ExhibitionModel();
+					exhibition.setExhibitionId(rs.getInt("exhibitionId"));
+					exhibition.setExhibitionTitle(rs.getString("exhibitionTitle"));
+					exhibition.setExhibitionDescription(rs.getString("exhibitionDescription"));
+					exhibition.setStartDate(rs.getDate("startDate"));
+					exhibition.setEndDate(rs.getDate("endDate"));
+					exhibition.setExhibitionImage(rs.getString("exhibitionImage"));
+				}
 			}
-		} catch (SQLException e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return exhibition;
 	}
 
 	public void addExhibition(ExhibitionModel exhibition) {
@@ -106,26 +115,48 @@ public class ExhibitionManagementService {
 		}
 	}
 
+	public List<ExhibitionModel> searchExhibitions(String keyword) {
+		return searchExhibitions(null, keyword);
+	}
+
 	public List<ExhibitionModel> searchExhibitions(String filter, String keyword) {
 		List<ExhibitionModel> exhibitionList = new ArrayList<>();
 
-		String column;
-		switch (filter) {
-		case "exhibitionTitle":
-			column = "exhibitionTitle";
-			break;
-		case "exhibitionDescription":
-			column = "exhibitionDescription";
-			break;
-		default:
-			return getAllExhibitions(); // fallback
+		// Determine the SQL query based on whether filter is provided
+		String sql;
+		if (filter == null || filter.isEmpty()) {
+			// Search both title and description when no filter is specified
+			sql = "SELECT exhibitionId, exhibitionTitle, exhibitionDescription, startDate, endDate, exhibitionImage "
+					+ "FROM exhibition WHERE exhibitionTitle LIKE ? OR exhibitionDescription LIKE ?";
+		} else {
+			// Validate the filter to prevent SQL injection
+			String column;
+			switch (filter) {
+			case "exhibitionTitle":
+				column = "exhibitionTitle";
+				break;
+			case "exhibitionDescription":
+				column = "exhibitionDescription";
+				break;
+			default:
+				return getAllExhibitions(); // fallback for invalid filters
+			}
+			sql = "SELECT exhibitionId, exhibitionTitle, exhibitionDescription, startDate, endDate, exhibitionImage "
+					+ "FROM exhibition WHERE " + column + " LIKE ?";
 		}
 
-		String sql = "SELECT exhibitionId, exhibitionTitle, exhibitionDescription, startDate, endDate, exhibitionImage "
-				+ "FROM exhibition WHERE " + column + " LIKE ?";
-
 		try (PreparedStatement ps = dbConn.prepareStatement(sql)) {
-			ps.setString(1, "%" + keyword + "%");
+			String searchTerm = "%" + keyword + "%";
+
+			if (filter == null || filter.isEmpty()) {
+				// Set both parameters for the OR search
+				ps.setString(1, searchTerm);
+				ps.setString(2, searchTerm);
+			} else {
+				// Set single parameter for filtered search
+				ps.setString(1, searchTerm);
+			}
+
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				ExhibitionModel exhibition = new ExhibitionModel();
@@ -190,10 +221,9 @@ public class ExhibitionManagementService {
 
 	public List<ExhibitionArtifactModel> getAllExhibitionArtifactRelations() {
 		List<ExhibitionArtifactModel> list = new ArrayList<>();
-		String sql = "SELECT ea.exhibitionId, ea.artifactId, e.exhibitionTitle, a.artifactName "+
-				    "FROM exhibitionartifact ea "+
-				    "JOIN exhibition e ON ea.exhibitionId = e.exhibitionId "+
-				    "JOIN artifact a ON ea.artifactId = a.artifactId";
+		String sql = "SELECT ea.exhibitionId, ea.artifactId, e.exhibitionTitle, a.artifactName "
+				+ "FROM exhibitionartifact ea " + "JOIN exhibition e ON ea.exhibitionId = e.exhibitionId "
+				+ "JOIN artifact a ON ea.artifactId = a.artifactId";
 
 		try (PreparedStatement stmt = dbConn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 			while (rs.next()) {

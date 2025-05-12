@@ -13,7 +13,7 @@ import java.util.List;
 import com.musemo.model.BookingModel;
 import com.musemo.model.ExhibitionModel;
 import com.musemo.service.BookingService;
-import com.musemo.service.ExhibitionService;
+import com.musemo.service.ExhibitionManagementService;
 
 /**
  * @author Viom Shrestha
@@ -21,7 +21,7 @@ import com.musemo.service.ExhibitionService;
 @WebServlet(asyncSupported = true, urlPatterns = { "/booking" })
 public class BookingController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ExhibitionService exhibitionService = new ExhibitionService();
+	private ExhibitionManagementService exhibitionService = new ExhibitionManagementService();
 	private BookingService bookingService = new BookingService();
 
 	// Handle GET request to load the booking page with exhibitions

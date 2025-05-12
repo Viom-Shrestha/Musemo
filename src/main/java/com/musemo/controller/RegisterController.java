@@ -52,7 +52,8 @@ public class RegisterController extends HttpServlet {
 			} else if (isAdded) {
 				try {
 					if (uploadImage(req)) {
-						handleSuccess(req, resp, "Your account is successfully created!", "/WEB-INF/pages/login.jsp");
+						req.setAttribute("success", "Your account is successfully created!");
+						req.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(req, resp);
 					} else {
 						handleError(req, resp, "Could not upload the image. Please try again later!");
 					}
@@ -72,7 +73,6 @@ public class RegisterController extends HttpServlet {
 	private String validateRegistrationForm(HttpServletRequest req) {
 		String username = req.getParameter("username");
 		String dobStr = req.getParameter("dob");
-		String gender = req.getParameter("gender");
 		String email = req.getParameter("email");
 		String contact = req.getParameter("contact");
 		String password = req.getParameter("password");
@@ -94,15 +94,13 @@ public class RegisterController extends HttpServlet {
 		// Field format validations
 		if (!ValidationUtil.isAlphanumericStartingWithLetter(username))
 			return "Username must start with a letter and contain only letters and numbers.";
-		if (!ValidationUtil.isValidGender(gender))
-			return "Gender must be selected";
 		if (!ValidationUtil.isValidEmail(email))
 			return "Invalid email format.";
 		if (!ValidationUtil.isValidPhoneNumber(contact))
 			return "Phone number must be 10 digits and start with 98.";
 		if (!ValidationUtil.isValidPassword(password))
 			return "Password must be at least 8 characters long, with 1 uppercase letter, 1 number, and 1 symbol.";
-		if (!ValidationUtil.isAgeAtLeast16(dob))
+		if (!ValidationUtil.isValidAge(dob))
 			return "You must be at least 16 years old and less than 100 years to register.";
 
 		// Image validation
@@ -141,12 +139,6 @@ public class RegisterController extends HttpServlet {
 		Part image = req.getPart("image");
 		String uploadPath = req.getServletContext().getRealPath("/") + "resources/imagesuser";
 		return imageUtil.uploadImage(image, uploadPath, imageUtil.getImageNameFromPart(image));
-	}
-
-	private void handleSuccess(HttpServletRequest req, HttpServletResponse resp, String message, String redirectPage)
-			throws ServletException, IOException {
-		req.setAttribute("success", message);
-		req.getRequestDispatcher(redirectPage).forward(req, resp);
 	}
 
 	private void handleError(HttpServletRequest req, HttpServletResponse resp, String message)

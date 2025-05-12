@@ -25,16 +25,6 @@ public class ExhibitionModel {
 		this.exhibitionImage = exhibitionImage;
 	}
 
-	public ExhibitionModel(String exhibitionTitle, String exhibitionDescription, Date startDate, Date endDate,
-			String exhibitionImage) {
-		super();
-		this.exhibitionTitle = exhibitionTitle;
-		this.exhibitionDescription = exhibitionDescription;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.exhibitionImage = exhibitionImage;
-	}
-
 	public int getExhibitionId() {
 		return exhibitionId;
 	}

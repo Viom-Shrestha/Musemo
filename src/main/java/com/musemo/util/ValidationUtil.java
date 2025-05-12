@@ -22,11 +22,6 @@ public class ValidationUtil {
 		return value != null && value.matches("^[a-zA-Z][a-zA-Z0-9]*$");
 	}
 
-	// 4. Validate if a string is "male" or "female" (case insensitive)
-	public static boolean isValidGender(String value) {
-		return value != null;
-	}
-
 	// 5. Validate if a string is a valid email address
 	public static boolean isValidEmail(String email) {
 		String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
@@ -62,7 +57,7 @@ public class ValidationUtil {
 	}
 
 	// Validates that the date of birth is not in the future and the age is between 16 and 100 years
-	public static boolean isAgeAtLeast16(LocalDate dob) {
+	public static boolean isValidAge(LocalDate dob) {
 		if (dob == null || dob.isAfter(LocalDate.now())) {
 			return false;
 		}

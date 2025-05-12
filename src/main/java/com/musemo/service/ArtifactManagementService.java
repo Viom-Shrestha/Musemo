@@ -19,13 +19,17 @@ public class ArtifactManagementService {
 	}
 
 	public List<ArtifactModel> getAllArtifacts() {
-		List<ArtifactModel> artifactList = new ArrayList<>();
-		String sql = "SELECT artifactId, artifactName, artifactType, creatorName, timePeriod, origin, `condition`, description, artifactImage FROM artifact";
+		List<ArtifactModel> artifacts = new ArrayList<>();
 
-		try (PreparedStatement ps = dbConn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+		String sql = "SELECT * FROM artifact";
+
+		try (Connection conn = DbConfig.getDbConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				ResultSet rs = stmt.executeQuery()) {
+
 			while (rs.next()) {
 				ArtifactModel artifact = new ArtifactModel();
-				artifact.setArtifactID(rs.getString("artifactId"));
+				artifact.setArtifactID(rs.getString("artifactID"));
 				artifact.setArtifactName(rs.getString("artifactName"));
 				artifact.setArtifactType(rs.getString("artifactType"));
 				artifact.setCreatorName(rs.getString("creatorName"));
@@ -34,44 +38,67 @@ public class ArtifactManagementService {
 				artifact.setCondition(rs.getString("condition"));
 				artifact.setDescription(rs.getString("description"));
 				artifact.setArtifactImage(rs.getString("artifactImage"));
-				artifactList.add(artifact);
+				artifacts.add(artifact);
 			}
-		} catch (SQLException e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return artifactList;
+
+		return artifacts;
 	}
 
-	public List<ArtifactModel> searchArtifacts(String filter, String keyword) {
+	// General search method (private/internal)
+	private List<ArtifactModel> searchArtifactsInternal(String keyword, String filter, String type) {
 		List<ArtifactModel> artifactList = new ArrayList<>();
+		StringBuilder sql = new StringBuilder(
+				"SELECT artifactID, artifactName, artifactType, creatorName, timePeriod, origin, "
+						+ "`condition`, description, artifactImage FROM artifact WHERE 1=1");
 
-		String column;
-		switch (filter) {
-		case "artifactName":
-			column = "artifactName";
-			break;
-		case "artifactType":
-			column = "artifactType";
-			break;
-		case "origin":
-			column = "origin";
-			break;
-		case "condition":
-			column = "condition";
-			break;
-		default:
-			return getAllArtifacts(); // fallback
+		List<String> parameters = new ArrayList<>();
+
+		// Handle filter-based search (if filter is provided)
+		if (filter != null && !filter.trim().isEmpty()) {
+			String column;
+			switch (filter) {
+			case "artifactName":
+			case "artifactType":
+			case "origin":
+			case "condition":
+				column = filter;
+				break;
+			default:
+				return getAllArtifacts(); // fallback for invalid filters
+			}
+			sql.append(" AND ").append(column).append(" LIKE ?");
+			parameters.add("%" + keyword + "%");
+		}
+		// Handle general keyword and type search (if no filter)
+		else {
+			if (keyword != null && !keyword.trim().isEmpty()) {
+				sql.append(" AND (artifactName LIKE ? OR description LIKE ?)");
+				parameters.add("%" + keyword + "%");
+				parameters.add("%" + keyword + "%");
+			}
+
+			if (type != null && !type.trim().isEmpty()) {
+				sql.append(" AND artifactType = ?");
+				parameters.add(type);
+			}
 		}
 
-		String sql = "SELECT artifactId, artifactName, artifactType, creatorName, timePeriod, origin, `condition`, description, artifactImage FROM artifact WHERE "
-				+ column + " LIKE ?";
+		try (Connection conn = DbConfig.getDbConnection();
+				PreparedStatement ps = conn.prepareStatement(sql.toString())) {
 
-		try (PreparedStatement ps = dbConn.prepareStatement(sql)) {
-			ps.setString(1, "%" + keyword + "%");
+			// Set all parameters
+			for (int i = 0; i < parameters.size(); i++) {
+				ps.setString(i + 1, parameters.get(i));
+			}
+
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				ArtifactModel artifact = new ArtifactModel();
-				artifact.setArtifactID(rs.getString("artifactId"));
+				artifact.setArtifactID(rs.getString("artifactID"));
 				artifact.setArtifactName(rs.getString("artifactName"));
 				artifact.setArtifactType(rs.getString("artifactType"));
 				artifact.setCreatorName(rs.getString("creatorName"));
@@ -82,10 +109,21 @@ public class ArtifactManagementService {
 				artifact.setArtifactImage(rs.getString("artifactImage"));
 				artifactList.add(artifact);
 			}
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+
 		return artifactList;
+
+	}
+
+	// Public API methods
+	public List<ArtifactModel> searchArtifactByKeywordAndType(String keyword, String type) {
+		return searchArtifactsInternal(keyword, null, type);
+	}
+
+	public List<ArtifactModel> searchArtifactByFilter(String filter, String keyword) {
+		return searchArtifactsInternal(keyword, filter, null);
 	}
 
 	public boolean deleteArtifact(String artifactId) {
@@ -99,28 +137,31 @@ public class ArtifactManagementService {
 		}
 	}
 
-	public ArtifactModel getArtifactById(String artifactId) {
-		String sql = "SELECT artifactId, artifactName, artifactType, creatorName, timePeriod, origin, `condition`, description, artifactImage FROM artifact WHERE artifactId = ?";
-		try (PreparedStatement ps = dbConn.prepareStatement(sql)) {
-			ps.setString(1, artifactId);
-			ResultSet rs = ps.executeQuery();
+	public ArtifactModel getArtifactById(String id) {
+		ArtifactModel artifact = null;
+		String query = "SELECT * FROM artifact WHERE artifactId = ?";
+
+		try (Connection conn = DbConfig.getDbConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+			stmt.setString(1, id);
+
+			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
-				ArtifactModel artifact = new ArtifactModel();
+				artifact = new ArtifactModel();
 				artifact.setArtifactID(rs.getString("artifactId"));
 				artifact.setArtifactName(rs.getString("artifactName"));
 				artifact.setArtifactType(rs.getString("artifactType"));
-				artifact.setCreatorName(rs.getString("creatorName"));
+				artifact.setDescription(rs.getString("description"));
 				artifact.setTimePeriod(rs.getString("timePeriod"));
 				artifact.setOrigin(rs.getString("origin"));
+				artifact.setCreatorName(rs.getString("creatorName"));
 				artifact.setCondition(rs.getString("condition"));
-				artifact.setDescription(rs.getString("description"));
 				artifact.setArtifactImage(rs.getString("artifactImage"));
-				return artifact;
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+
+		return artifact;
 	}
 
 	public boolean updateArtifact(ArtifactModel artifact) {

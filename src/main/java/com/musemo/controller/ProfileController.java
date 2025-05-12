@@ -28,7 +28,7 @@ import java.time.format.DateTimeParseException;
 )
 public class ProfileController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final ProfileService profileService = new ProfileService();
+	private final ProfileService service = new ProfileService();
 	private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	@Override
@@ -47,7 +47,7 @@ public class ProfileController extends HttpServlet {
 			// Check for delete action
 			String action = request.getParameter("action");
 			if ("delete".equals(action)) {
-				boolean deleted = profileService.deleteUser(loggedInUsername);
+				boolean deleted = service.deleteUser(loggedInUsername);
 				if (deleted) {
 					session.invalidate(); // log out the user
 					CookieUtil.deleteCookie(response, "username");
@@ -60,7 +60,7 @@ public class ProfileController extends HttpServlet {
 			}
 
 			// Default: load profile
-			UserModel user = profileService.getUserByUsername(loggedInUsername);
+			UserModel user = service.getUserByUsername(loggedInUsername);
 			if (user == null) {
 				response.sendRedirect(request.getContextPath() + "/login");
 				return;
@@ -68,8 +68,8 @@ public class ProfileController extends HttpServlet {
 
 			request.setAttribute("user", user);
 			request.setAttribute("dateOfBirth", user.getDateOfBirth());
-			request.setAttribute("totalBookings", profileService.getTotalBookings(loggedInUsername));
-			request.setAttribute("exhibitionsVisited", profileService.getExhibitionsVisited(loggedInUsername));
+			request.setAttribute("totalBookings", service.getTotalBookings(loggedInUsername));
+			request.setAttribute("exhibitionsVisited", service.getExhibitionsVisited(loggedInUsername));
 
 			request.getRequestDispatcher("/WEB-INF/pages/profile.jsp").forward(request, response);
 		} else {
@@ -171,14 +171,14 @@ public class ProfileController extends HttpServlet {
 				}
 			} else {
 				System.out.println("No new profile photo provided. Retaining existing image.");
-				UserModel existingUser = profileService.getUserByUsername(username);
+				UserModel existingUser = service.getUserByUsername(username);
 				if (existingUser != null) {
 					user.setUserImage(existingUser.getUserImage());
 				}
 			}
 
 			// Save user update after handling image
-			profileService.updateUser(user);
+			service.updateUser(user);
 			request.setAttribute("success", "Profile updated successfully!");
 			doGet(request, response);
 
@@ -188,7 +188,7 @@ public class ProfileController extends HttpServlet {
 
 		// Perform update only after image logic is complete
 		System.out.println("Updating user profile in database...");
-		profileService.updateUser(user);
+		service.updateUser(user);
 		System.out.println("User profile updated successfully.");
 		response.sendRedirect(request.getContextPath() + "/logout");
 
@@ -197,22 +197,26 @@ public class ProfileController extends HttpServlet {
 	private String validateProfileForm(HttpServletRequest req) {
 		String username = req.getParameter("username");
 		String fullName = req.getParameter("fullName");
-		String gender = req.getParameter("gender");
 		String email = req.getParameter("email");
 		String contact = req.getParameter("contact");
 		String password = req.getParameter("newPassword");
 		String confirmPassword = req.getParameter("confirmNewPassword");
+		String dobStr = req.getParameter("dob");
 
-		String duplicateError = profileService.isUserInfoTaken(username, email, contact);
+		String duplicateError = service.isUserInfoTaken(username, email, contact);
 		if (duplicateError != null) {
 			return duplicateError;
 		}
 
+		LocalDate dob;
+		try {
+			dob = LocalDate.parse(dobStr);
+		} catch (Exception e) {
+			return "Invalid date format. Please use YYYY-MM-DD.";
+		}
+
 		if (!ValidationUtil.isAlphabetic(fullName.replaceAll("\\s+", ""))) {
 			return "Full Name must contain only letters and spaces.";
-		}
-		if (!ValidationUtil.isValidGender(gender)) {
-			return "Invalid gender.";
 		}
 		if (!ValidationUtil.isValidEmail(email)) {
 			return "Invalid email format.";
@@ -220,7 +224,9 @@ public class ProfileController extends HttpServlet {
 		if (!ValidationUtil.isValidPhoneNumber(contact)) {
 			return "Phone number must be 10 digits and start with 98.";
 		}
-
+		if (!ValidationUtil.isValidAge(dob)) {
+			return "You must be at least 16 years old and less than 100 years to register.";
+		}
 		if ((password != null && !password.isEmpty()) || (confirmPassword != null && !confirmPassword.isEmpty())) {
 			if (!ValidationUtil.isValidPassword(password)) {
 				return "Password must be at least 8 characters long, with 1 uppercase letter, 1 number, and 1 symbol.";

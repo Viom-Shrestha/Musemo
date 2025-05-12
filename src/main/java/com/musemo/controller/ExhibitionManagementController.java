@@ -4,7 +4,7 @@ import com.musemo.model.ArtifactModel;
 import com.musemo.model.ExhibitionArtifactModel;
 import com.musemo.model.ExhibitionModel;
 import com.musemo.service.ExhibitionManagementService;
-import com.musemo.service.ArtifactService;
+import com.musemo.service.ArtifactManagementService;
 import com.musemo.util.ImageUtil;
 import com.musemo.util.ValidationUtil;
 
@@ -25,11 +25,11 @@ import java.util.List;
 public class ExhibitionManagementController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ExhibitionManagementService exhibitionService;
-	private ArtifactService artifactService;
+	private ArtifactManagementService artifactService;
 
 	public void init() {
 		exhibitionService = new ExhibitionManagementService();
-		artifactService = new ArtifactService();
+		artifactService = new ArtifactManagementService();
 	}
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

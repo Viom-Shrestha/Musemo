@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import com.musemo.model.ArtifactModel;
-import com.musemo.service.ArtifactDetailsService;
+import com.musemo.service.ArtifactManagementService;
 
 /**
  * @author Viom Shrestha
@@ -16,11 +16,11 @@ import com.musemo.service.ArtifactDetailsService;
 @WebServlet(asyncSupported = true, urlPatterns = { "/artifactDetails" })
 public class ArtifactDetailsController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ArtifactDetailsService artifactDetailsService;
+	private ArtifactManagementService artifactDetailsService;
 
 	@Override
 	public void init() throws ServletException {
-		artifactDetailsService = new ArtifactDetailsService();
+		artifactDetailsService = new ArtifactManagementService();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

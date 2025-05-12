@@ -18,16 +18,6 @@ import com.musemo.model.ExhibitionModel;
  */
 public class HomeService {
 
-	// NO Connection field here - connections managed per-method
-
-	/**
-	 * Constructor - No database connection initialization needed here anymore.
-	 * If DbConfig needs initialization, it should handle that itself.
-	 */
-	public HomeService() {
-		// Initialization logic if needed, but not for a shared connection.
-	}
-
 	/**
 	 * Retrieves the total count of artifacts.
 	 * @return the total number of artifacts.
@@ -55,7 +45,7 @@ public class HomeService {
 	 * @throws SQLException if a database access error occurs.
      * @throws ClassNotFoundException if the JDBC driver is not found (potentially from DbConfig).
 	 */
-	public int getVisitorCountToday() throws SQLException, ClassNotFoundException {
+	public int getVisitorCount() throws SQLException, ClassNotFoundException {
 		String sql = "SELECT COUNT(*) FROM user WHERE role='User' ";
 		try (Connection conn = DbConfig.getDbConnection();
 			 Statement stmt = conn.createStatement();

@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.musemo.model.ArtifactModel;
-import com.musemo.service.ArtifactService;
+import com.musemo.service.ArtifactManagementService;
 
 /**
  * @author Viom Shrestha
@@ -17,11 +17,11 @@ import com.musemo.service.ArtifactService;
 @WebServlet(asyncSupported = true, urlPatterns = { "/artifact" })
 public class ArtifactController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ArtifactService artifactService;
+	private ArtifactManagementService artifactService;
 
 	@Override
 	public void init() throws ServletException {
-		artifactService = new ArtifactService();
+		artifactService = new ArtifactManagementService();
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class ArtifactController extends HttpServlet {
         String keyword = request.getParameter("keyword");
         String type = request.getParameter("type");
 
-        List<ArtifactModel> artifacts = artifactService.searchArtifacts(keyword, type);
+        List<ArtifactModel> artifacts = artifactService.searchArtifactByKeywordAndType(keyword, type);
         request.setAttribute("artifactList", artifacts);
         request.getRequestDispatcher("WEB-INF/pages/artifact.jsp").forward(request, response);
     }

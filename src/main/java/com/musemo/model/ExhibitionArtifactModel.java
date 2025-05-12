@@ -10,11 +10,6 @@ public class ExhibitionArtifactModel {
 		super();
 	}
 
-	public ExhibitionArtifactModel(int exhibitionId, String artifactId) {
-		this.exhibitionId = exhibitionId;
-		this.artifactId = artifactId;
-	}
-
 	public int getExhibitionId() {
 		return exhibitionId;
 	}
