@@ -19,12 +19,17 @@
 </head>
 <body>
 	<jsp:include page="header.jsp" />
-
 	<!-- Page Header -->
 	<header class="page-header">
 		<h1>Exhibition Details</h1>
 		<h2>National Museum of History</h2>
 	</header>
+
+	<!-- Back Button -->
+	<div class="back-button-container">
+		<a href="${contextPath}/exhibition" class="back-button"> Back to
+			Exhibitions </a>
+	</div>
 
 	<!-- Main Content -->
 	<main class="main-content">
@@ -41,7 +46,7 @@
 				<h2>${exhibition.exhibitionTitle}</h2>
 				<a href="${contextPath}/booking" class="btn">Book your Visit</a>
 			</div>
-			<p>${exhibition.startDate}- ${exhibition.endDate}</p>
+			<p>${exhibition.startDate}-${exhibition.endDate}</p>
 			<br>
 			<div class="exhibition-description">
 				<p>${exhibition.exhibitionDescription}</p>

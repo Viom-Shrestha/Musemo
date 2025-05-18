@@ -14,8 +14,8 @@ import com.musemo.util.ValidationUtil;
 /**
  * Controller for handling admin profile management operations including viewing
  * and updating admin profile information.
- * 
- * @author Viom Shrestha
+ *
+ * @author 23048612 Viom Shrestha
  */
 @WebServlet(asyncSupported = true, urlPatterns = { "/adminProfile" })
 public class AdminProfileController extends HttpServlet {
@@ -23,81 +23,89 @@ public class AdminProfileController extends HttpServlet {
 	private ProfileService service = new ProfileService();
 
 	/**
-	 * Handles GET requests to display the admin profile page. Retrieves current
-	 * admin details from service and forwards to view page.
+	 * Handles GET requests to display the admin profile page. Retrieves the current
+	 * admin's details from the ProfileService and forwards the request to the
+	 * adminProfile.jsp view page.
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// Get current admin details
+		// Retrieve the current admin user's details using the service
 		UserModel admin = service.getAdmin();
 
-		// Set admin object in request
+		// Set the admin UserModel as an attribute in the request
 		request.setAttribute("admin", admin);
 
-		// Forward to admin profile view page
+		// Forward the request to the admin profile view page to display the information
 		request.getRequestDispatcher("/WEB-INF/pages/adminProfile.jsp").forward(request, response);
 	}
 
 	/**
-	 * Handles POST requests for updating admin profile information. Validates
-	 * inputs, updates profile if valid, and returns appropriate response.
+	 * Handles POST requests for updating the admin profile information submitted
+	 * from the admin profile form. It validates the input fields, updates the
+	 * admin's details in the database if the validation is successful, and then
+	 * redirects back to the admin profile page with a success or error message.
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// First validate all form inputs
+		// First, validate all the input fields from the admin profile form
 		String validationMessage = validateAdminProfileForm(request);
 		if (validationMessage != null) {
-			// If validation fails, handle error and return
+			// If any validation fails, handle the error and return to the form
 			handleError(request, response, validationMessage);
 			return;
 		}
 
-		// Get all parameters from request
+		// Retrieve the updated values from the request parameters
 		String fullName = request.getParameter("fullName");
 		String username = request.getParameter("username");
 		String email = request.getParameter("email");
 		String contact = request.getParameter("contact");
 		String password = request.getParameter("password");
 
-		// Create new admin model with updated details
+		// Create a new UserModel object to hold the updated admin details
 		UserModel admin = new UserModel();
 		admin.setFullName(fullName);
 		admin.setUsername(username);
 		admin.setEmail(email);
 		admin.setContact(contact);
 
-		// Only encrypt and set password if a new one was provided
+		// Only encrypt and set the password if a new password was provided by the user
 		if (!ValidationUtil.isNullOrEmpty(password)) {
 			admin.setPassword(PasswordUtil.encrypt(username, password));
 		} else {
-			admin.setPassword(null); // Keep existing password
+			admin.setPassword(null);
 		}
 
-		// Attempt to update admin credentials in database
+		// Attempt to update the admin's credentials in the database using the service
 		boolean updated = service.updateAdminCredentials(admin);
 		if (updated) {
+			// If the update was successful, set a success message as a request attribute
 			request.setAttribute("success", "Profile updated successfully.");
 		} else {
+			// If the update failed, set an error message as a request attribute
 			request.setAttribute("error", "Failed to update profile.");
 		}
 
-		// Refresh admin data from database
+		// Refresh the admin data from the database to display the updated information
 		admin = service.getAdmin();
 		request.setAttribute("admin", admin);
 
-		// Forward back to profile page with updated info
+		// Forward the request back to the admin profile page to display the updated
+		// information or error message
 		request.getRequestDispatcher("/WEB-INF/pages/adminProfile.jsp").forward(request, response);
 	}
 
 	/**
-	 * Validates all admin profile form inputs. Checks for duplicates and validates
-	 * format of each field.
-	 * 
-	 * @param request The HttpServletRequest containing form parameters
-	 * @return Error message if validation fails, null if all valid
+	 * Validates the admin profile form inputs. It checks for duplicate username,
+	 * email, or contact, and validates the format of each field using the
+	 * ValidationUtil class.
+	 *
+	 * @param request The HttpServletRequest containing the form parameters.
+	 * @return An error message string if any validation fails, or null if all
+	 *         inputs are valid.
 	 */
 	private String validateAdminProfileForm(HttpServletRequest request) {
 		String username = request.getParameter("username");
@@ -106,60 +114,70 @@ public class AdminProfileController extends HttpServlet {
 		String contact = request.getParameter("contact");
 		String password = request.getParameter("password");
 
-		// Check if username/email/contact are already taken
+		// Check if the provided username, email, or contact are already taken by
+		// another user
 		String duplicateError = service.isUserInfoTaken(username, email, contact);
 		if (duplicateError != null) {
 			return duplicateError;
 		}
-
-		// Validate full name contains only letters and spaces
+		// Validate that the full name contains only letters and spaces
 		if (ValidationUtil.isNullOrEmpty(fullName) || !ValidationUtil.isAlphabetic(fullName.replaceAll("\\s+", ""))) {
 			return "Full name must contain only letters and spaces.";
 		}
-
-		// Validate email format
+		// Validate the format of the email address
 		if (!ValidationUtil.isValidEmail(email)) {
 			return "Invalid email format.";
 		}
-
-		// Validate phone number format (10 digits starting with 98)
+		// Validate the format of the phone number (must be 10 digits and start with 98)
 		if (!ValidationUtil.isValidPhoneNumber(contact)) {
 			return "Phone number must be 10 digits and start with 98.";
 		}
-
-		// Validate password meets complexity requirements if provided
+		// Validate the password if it's not empty, checking for complexity requirements
 		if (!ValidationUtil.isNullOrEmpty(password) && !ValidationUtil.isValidPassword(password)) {
 			return "Password must be at least 8 characters long, include an uppercase letter, a number, and a symbol.";
 		}
-
+		// If all validations pass, return null
 		return null;
 	}
 
 	/**
-	 * Handles form validation errors by setting error message and temporary user
-	 * model before redisplaying form.
+	 * Handles form validation errors by setting the error message as a request
+	 * attribute and creating a temporary UserModel with the submitted values to
+	 * repopulate the form fields before redisplaying the form.
+	 *
+	 * @param req     The HttpServletRequest object.
+	 * @param resp    The HttpServletResponse object.
+	 * @param message The error message to be displayed.
+	 * @throws ServletException If a servlet-specific error occurs.
+	 * @throws IOException      If an I/O error occurs.
 	 */
 	private void handleError(HttpServletRequest req, HttpServletResponse resp, String message)
 			throws ServletException, IOException {
-		// Set error message in request
+		// Set the error message as a request attribute
 		req.setAttribute("error", message);
 
-		// Create temporary model with submitted values for form redisplay
+		// Create a temporary UserModel with the values submitted in the form
 		req.setAttribute("admin", createTempUserModel(req));
 
-		// Forward back to form page
+		// Forward the request back to the admin profile page to display the error and
+		// the form with previous inputs
 		doGet(req, resp);
 	}
 
 	/**
-	 * Creates a temporary user model from request parameters for redisplaying form
-	 * with submitted values after error.
+	 * Creates a temporary UserModel object from the request parameters. This is
+	 * used to repopulate the form fields with the user's input after a validation
+	 * error occurs.
+	 *
+	 * @param req The HttpServletRequest object containing the form parameters.
+	 * @return A UserModel object populated with the submitted form values.
 	 */
 	private UserModel createTempUserModel(HttpServletRequest req) {
 		UserModel user = new UserModel();
 		user.setFullName(req.getParameter("fullName"));
 		user.setEmail(req.getParameter("email"));
 		user.setContact(req.getParameter("contact"));
+		user.setUsername(req.getParameter("username")); // Include username for redisplaying
 		return user;
 	}
 }

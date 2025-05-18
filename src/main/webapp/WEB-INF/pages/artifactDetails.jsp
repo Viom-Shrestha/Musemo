@@ -20,6 +20,11 @@
 <body>
 	<jsp:include page="header.jsp" />
 
+	<!-- Back Button -->
+	<div class="back-button-container">
+		<a href="${contextPath}/artifact" class="back-button"> Back to
+			Artifacts </a>
+	</div>
 	<!-- Artifact Content -->
 	<main class="artifact-container">
 		<!-- Left Image Section -->
@@ -55,7 +60,6 @@
 				<h3>Description</h3>
 				<p>${artifact.description}</p>
 			</div>
-			
 		</div>
 	</main>
 

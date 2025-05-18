@@ -21,7 +21,7 @@
 				<h1>About the Museum</h1>
 				<p>Preserving the past, inspiring the future through art and
 					history</p>
-				<a href="${pageContext.request.contextPath}/pages/exhibition.jsp" class="cta-button">Explore Exhibitions</a>
+				<a href="${pageContext.request.contextPath}/exhibition" class="cta-button">Explore Exhibitions</a>
 			</div>
 		</div>
 	</section>

@@ -15,7 +15,7 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-	<!-- Sidebar -->
+	<!-- Sidebar -->F
 	<div class="sidebar">
 		<div class="logo-container">
 			<div class="logo">
@@ -37,9 +37,10 @@
 			class="fas fa-user-cog"></i> <span>Admin Profile</span>
 		</a>
 	</div>
+	
 	<!-- Main Content -->
 	<main class="main-content">
-	<h1 class="page-title">User Management</h1>
+		<h1 class="page-title">User Management</h1>
 
 		<!-- Search and Filter -->
 		<div class="search-filter">
@@ -77,21 +78,31 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="user" items="${users}">
-					<tr>
-						<td class="image-cell"><img
-							src="${contextPath}/resources/imagesuser/${user.userImage}"
-							alt="User Image" class="user-image"></td>
-						<td>${user.username}</td>
-						<td>${user.fullName}</td>
-						<td>****</td>
-						<td>${user.role}</td>
-						<td>${user.gender}</td>
-						<td>${user.email}</td>
-						<td>${user.contact}</td>
-						<td>${user.dateOfBirth}</td>
-					</tr>
-				</c:forEach>
+				<c:choose>
+					<c:when test="${not empty users}">
+						<c:forEach var="user" items="${users}">
+							<tr>
+								<td class="image-cell"><img
+									src="${contextPath}/resources/imagesuser/${user.userImage}"
+									alt="User Image" class="user-image"></td>
+								<td>${user.username}</td>
+								<td>${user.fullName}</td>
+								<td>****</td>
+								<td>${user.role}</td>
+								<td>${user.gender}</td>
+								<td>${user.email}</td>
+								<td>${user.contact}</td>
+								<td>${user.dateOfBirth}</td>
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<tr>
+							<td colspan="9" style="text-align: center; padding: 20px;">No
+								results found.</td>
+						</tr>
+					</c:otherwise>
+				</c:choose>
 			</tbody>
 		</table>
 

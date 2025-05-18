@@ -26,8 +26,6 @@
 						alt="Profile Photo"
 						style="width: 150px; height: 150px; border-radius: 50%;">
 				</div>
-
-
 			</div>
 			<div class="stats-container">
 				<h3 class="stats-title">Your Museum Activity</h3>
@@ -51,6 +49,7 @@
 					<p class="success-message">${success}</p>
 				</c:if>
 			</div>
+			
 			<form class="form-container" action="${contextPath}/profile"
 				method="post" enctype="multipart/form-data">
 
@@ -104,7 +103,6 @@
 						value="${user.dateOfBirth != null ? user.dateOfBirth.toString() : ''}">
 
 				</div>
-
 
 				<div class="form-group">
 					<label for="contact">Contact:</label> <input type="tel"

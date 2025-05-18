@@ -11,7 +11,7 @@ import java.io.IOException;
  * Controller class for handling requests to the About page. Maps to the
  * "/about" URL pattern and supports asynchronous operations.
  * 
- * @author Viom Shrestha
+ *  @author 23048612 Viom Shrestha
  */
 @WebServlet(asyncSupported = true, urlPatterns = { "/about" })
 public class AboutController extends HttpServlet {

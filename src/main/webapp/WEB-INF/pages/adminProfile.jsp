@@ -48,7 +48,6 @@
 					</div>
 
 				</div>
-
 				<!-- Profile Form -->
 				<div class="profile-details">
 					<h2 class="profile-header">Admin Information</h2>
@@ -61,7 +60,6 @@
 							<p class="success-message">${success}</p>
 						</c:if>
 					</div>
-
 
 					<form action="${contextPath}/adminProfile" method="post">
 						<div class="form-group">
@@ -101,8 +99,6 @@
 					</form>
 
 				</div>
-
-
 			</div>
 		</div>
 	</div>

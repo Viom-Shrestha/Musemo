@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 12, 2025 at 11:11 PM
+-- Generation Time: May 15, 2025 at 03:42 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -36,7 +36,7 @@ CREATE TABLE `artifact` (
   `origin` varchar(20) NOT NULL,
   `condition` varchar(10) NOT NULL,
   `description` text NOT NULL,
-  `artifactImage` varchar(20) NOT NULL
+  `artifactImage` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -49,8 +49,7 @@ INSERT INTO `artifact` (`artifactId`, `artifactName`, `artifactType`, `creatorNa
 ('R100', 'Rosetta Stone', 'Relic', 'Ancient Egyptians', '196 BC', 'Egypt', 'Damaged', 'The Rosetta Stone is a stele of granodiorite inscribed with three versions of a decree issued in 196 BC during the Ptolemaic dynasty of Egypt, on behalf of King Ptolemy V Epiphanes.', 'RosettaStone.jpg'),
 ('S100', 'The Thinker', 'Sculpture', 'Auguste Rodin', '1904 AD', 'France', 'Good', 'The Thinker (French: Le Penseur), by Auguste Rodin, is a bronze sculpture depicting a nude male figure of heroic size, seated on a large rock, leaning forward, right elbow placed upon the left thigh, back of the right hand supporting the chin in a posture evocative of deep thought and contemplation.', 'TheThinker.jpg'),
 ('S102', 'Veiled Bust', 'Sculpture', 'Unknown', 'Renaissance', 'Greece', 'Excellent', 'The Veiled Bust is a mysterious Object found recently.', 'Bust.jpg'),
-('S777', 'Winged Victory', 'Sculpture', 'Unknown', '200-190 BC', 'Greece', 'Damaged', 'It is a masterpiece of Greek sculpture from the Hellenistic era, dating from the beginning of the 2nd century BC (190 BC). It is composed of a statue representing the goddess Niké (Victory), whose head and arms are missing and its base is in the shape of a ship\'s bow.', 'WingedVictory.jpg'),
-('T100', 'Test', 'Painting', 'Test', 'Test', 'Test', 'Excellent', 'Test', 'Test.jpg');
+('S777', 'Winged Victory', 'Sculpture', 'Unknown', '200-190 BC', 'Greece', 'Damaged', 'It is a masterpiece of Greek sculpture from the Hellenistic era, dating from the beginning of the 2nd century BC (190 BC). It is composed of a statue representing the goddess Niké (Victory), whose head and arms are missing and its base is in the shape of a ship\'s bow.', 'WingedVictory.jpg');
 
 -- --------------------------------------------------------
 
@@ -81,8 +80,7 @@ INSERT INTO `booking` (`bookingId`, `exhibitionId`, `username`, `bookingDate`, `
 (7, 1022, 'manish', '2025-05-08', '09:00:00', 'Student Ticket'),
 (13, 1025, 'manish', '2025-05-08', '12:00:00', 'General Ticket'),
 (14, 1020, 'manish', '2025-05-08', '09:00:00', 'General Ticket'),
-(18, 1020, 'Nate', '2025-05-10', '09:00:00', 'General Ticket'),
-(21, 2001, 'manish', '2025-05-10', '15:00:00', 'General Ticket');
+(18, 1020, 'Nate', '2025-05-10', '09:00:00', 'General Ticket');
 
 -- --------------------------------------------------------
 
@@ -96,7 +94,7 @@ CREATE TABLE `exhibition` (
   `exhibitionDescription` text NOT NULL,
   `startDate` date NOT NULL,
   `endDate` date DEFAULT NULL,
-  `exhibitionImage` varchar(30) NOT NULL
+  `exhibitionImage` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -107,8 +105,7 @@ INSERT INTO `exhibition` (`exhibitionId`, `exhibitionTitle`, `exhibitionDescript
 (1020, 'Paintings and The History of Art', 'Explore the world of arts and paintings from history itself. ', '2025-04-27', '2025-06-04', '1020.jpg'),
 (1021, 'The Great Ancient Egypt', 'Peek into the past of the Great Egyptian civilization with this collection of artifacts from Egypt.', '2025-04-30', '2025-05-23', '1021.jpg'),
 (1022, 'The Renaissance Once Again', 'See what Renaissance was all about and relive through the pages of history itself.', '2025-05-01', '2025-06-30', '1022.jpg'),
-(1025, 'Wonderful World of Sculpted Beauty', 'Interested in the world of sculpted stone and artistry? This is just the exhibition to see all forms of sculptures by past and present sculptors.', '2025-04-17', '2025-07-02', '1025.jpg'),
-(2001, 'Test', 'Test', '2025-05-01', '2025-05-19', 'Test.jpg');
+(1025, 'Wonderful World of Sculpted Beauty', 'Interested in the world of sculpted stone and artistry? This is just the exhibition to see all forms of sculptures by past and present sculptors.', '2025-04-17', '2025-07-02', '1025.jpg');
 
 -- --------------------------------------------------------
 
