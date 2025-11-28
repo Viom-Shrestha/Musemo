@@ -1,0 +1,1 @@
+com.Musemo.model.ArtifactModel
